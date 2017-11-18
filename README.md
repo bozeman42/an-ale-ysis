@@ -16,12 +16,16 @@ Link to software that is required to install the app (e.g. node).
 
 - [Node.js](https://nodejs.org/en/)
 - List other prerequisites here
+- An API key from www.brewerydb.com is needed for search functionality
 
 
 ### Installing
 
 Steps to get the development environment running.
-
+1. run `npm install`
+2. copy the .env.example file and rename to '.env'
+3. add your API key to the .env file.
+4. Create the SQL tables in your database
 ```sql
 CREATE TABLE "users" (
   "id" serial primary key,
