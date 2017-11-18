@@ -3,3 +3,19 @@
     <input type="search" ng-model="sc.data.keyword">
   </form>
 </div>
+<div ng-repeat="beer in bc.data.beers">
+    <img ng-src="{{beer.labels.medium}}">
+    <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
+    <p>
+      Style: {{beer.style.name}} 
+    </p>
+    <p>
+      IBU: <span ng-if="beer.ibu != undefined">{{beer.ibu}}</span>
+      <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span> 
+    </p>
+    <p>
+      ABV: {{beer.abv}}%
+    </p>
+    <p>Description {{beer.description}}</p>
+    <hr>
+  </div>

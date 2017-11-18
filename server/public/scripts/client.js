@@ -33,7 +33,12 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/select', {
       templateUrl: '/views/templates/select.html',
-      controller: 'SelectController as sc'
+      controller: 'SelectController as sc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
     })
     .otherwise({
       redirectTo: 'home'
