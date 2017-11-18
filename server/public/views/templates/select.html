@@ -3,7 +3,7 @@
     <input type="search" ng-model="sc.data.keyword">
   </form>
 </div>
-<div ng-repeat="beer in bc.data.beers">
+<div ng-repeat="beer in sc.data.beers">
     <img ng-src="{{beer.labels.medium}}">
     <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
     <p>
