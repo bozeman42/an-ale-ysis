@@ -8,5 +8,14 @@ myApp.controller('SelectController', function(BeerService){
     bs.searchBeer(keyword);
   };
 
+  vm.selectBeer = (beer) => {
+    vm.data.currentBeer = beer;
+    console.log(vm.data.currentBeer);
+    bs.rateBeer(beer);
+  };
 
+  vm.goToManualEntry = () => {
+    bs.goToManualEntry();
+  };
+  
 });

@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute','ngMaterial', 'ngMessages','ngAnimate']);
 
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider) {
@@ -33,7 +33,30 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/select', {
       templateUrl: '/views/templates/select.html',
-      controller: 'SelectController as sc'
+      controller: 'SelectController as sc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/rate', {
+      templateUrl: '/views/templates/rate.html',
+      controller: 'RatingController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/entry', {
+      templateUrl: '/views/templates/entry.html',
+      controller: 'RatingController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
     })
     .otherwise({
       redirectTo: 'home'

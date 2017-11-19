@@ -1,8 +1,11 @@
-myApp.service('BeerService', function($http){
+myApp.service('BeerService', function($http,$location){
   let self = this;
   self.data = {
     keyword: '',
-    beers: []
+    beers: [],
+    currentBeer: {
+
+    }
   };
 
   self.searchBeer = (keyword) => {
@@ -26,7 +29,13 @@ myApp.service('BeerService', function($http){
     self.data.keyword = '';
   };
 
+  self.rateBeer = (beer) => {
+    $location.path('/rate');
+  };
 
+  self.goToManualEntry = () => {
+    $location.path('/entry');
+  };
 
 
 });

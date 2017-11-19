@@ -6,7 +6,7 @@ let API_KEY = process.env.API_KEY;
 router.get('/search',function(req,res){
   req.query.key = API_KEY;
   request('https://api.brewerydb.com/v2/search',{qs: req.query},function(error,response,body){
-    res.send(response.body);
+    res.send(body);
   });
 });
 

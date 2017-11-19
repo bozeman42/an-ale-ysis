@@ -1,10 +1,16 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   font-size: 14px;
+  background-color: #783030;
 }
- 
+
+md-card {
+  background-color: #D8D8C0;
+}
+
 .instructions .container h1 {
   font-size: 32px;
   font-weight: 600;
@@ -24,8 +30,8 @@ body, html {
   margin-top: 10px;
 }
 
-.container p{
-  margin-top : 14px;
+.container p {
+  margin-top: 14px;
 }
 
 .message {
@@ -37,14 +43,14 @@ body, html {
 }
 
 .message:nth-child(odd) {
-   background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 .message:nth-child(even) {
   background-color: #f8f8f8;
 }
 
-.btn-danger{
+.btn-danger {
   margin-left: 10px;
 }
 
@@ -73,8 +79,15 @@ li a {
   text-decoration: none;
 }
 
+
 /* Change the link color to #111 (black) on hover */
+
 li a:hover {
   text-decoration: underline;
   color: #eee;
+}
+
+#searchBox {
+  background-color: #D8D8C0;
+  height: 150px;
 }
