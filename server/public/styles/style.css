@@ -3,8 +3,16 @@ body, html {
   padding: 0;
   font-family: sans-serif;
   font-size: 14px;
+  background-color: #783030;
 }
- 
+
+md-card {
+  background-color: #D8D8C0;
+}
+
+form {
+  background-color: #A86048;
+}
 .instructions .container h1 {
   font-size: 32px;
   font-weight: 600;
