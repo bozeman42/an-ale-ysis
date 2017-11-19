@@ -33,5 +33,9 @@ myApp.service('BeerService', function($http,$location){
     $location.path('/rate');
   };
 
+  self.goToManualEntry = () => {
+    $location.path('/entry');
+  };
+
 
 });

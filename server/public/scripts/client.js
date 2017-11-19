@@ -49,6 +49,15 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/entry', {
+      templateUrl: '/views/templates/entry.html',
+      controller: 'RatingController as rc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .otherwise({
       redirectTo: 'home'
     });

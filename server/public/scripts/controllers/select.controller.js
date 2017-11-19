@@ -14,4 +14,8 @@ myApp.controller('SelectController', function(BeerService){
     bs.rateBeer(beer);
   };
 
+  vm.goToManualEntry = () => {
+    bs.goToManualEntry();
+  };
+  
 });
