@@ -17,7 +17,7 @@ myApp.service('BeerService', function($http,$location){
     review: {
       rating: 3,
       comment: '',
-      beerId: ''
+      beer: {}
     },
     styles: []
   };
@@ -47,7 +47,7 @@ myApp.service('BeerService', function($http,$location){
   self.selectBeer = (beer) => {
     $location.path('/rate');
     console.log(beer.brewery);
-    self.data.beerToRate = beer;
+    self.data.review.beer = beer;
     
   };
 
@@ -76,8 +76,8 @@ myApp.service('BeerService', function($http,$location){
     };
   };
 
-  self.rateBeer = (beer) => {
-    $http.post('/rate',beer)
+  self.submitReview = (review) => {
+    $http.post('/beer/rate',review)
     .then((response)=>{
       console.log('Beer rated!');
     })
