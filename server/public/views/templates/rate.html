@@ -1,1 +1,52 @@
 <div ng-include="'views/partials/nav.html'"></div>
+<div layout="row" layout-align="center">
+  <div flex-gt-sm="50" layout="row">
+    <md-card flex>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{rc.beer.name}}</span>
+          <span class="md-subhead">{{rc.beer.breweries[0].name}}</span>
+          <span class="md-subhead">{{rc.beer.style.name}}</span>
+        </md-card-title-text>
+        <md-card-title-media>
+          <div class="md-media-md card-media">
+            <img ng-src="{{rc.beer.labels.medium}}">
+          </div>
+        </md-card-title-media>
+      </md-card-title>
+      <md-card-content layout="column">
+        <div layout="row">
+          <div layout="column" flex="50">
+            <div layout="row" layout-align="space-around">
+              <span ng-if="rc.beer.ibu != undefined">IBU: {{rc.beer.ibu}} </span>
+              <span ng-if="rc.beer.ibu === undefined">IBU (style): {{rc.beer.style.ibuMin}} - {{rc.beer.style.ibuMax}} </span>
+              ABV: {{rc.beer.abv}}%
+            </div>
+            <div flex>
+              <p>
+                {{rc.beer.description}}
+              </p>
+            </div>
+          </div>
+          <md-card-actions flex="75" layout-gt-xs="row" layout-align="space-around">
+            <md-radio-group flex layout="column" ng-model="rc.data.review.rating">
+              <md-radio-button class="md-primary" value="5">5 - I love it!</md-radio-button>
+              <md-radio-button class="md-primary" value="4">4 - I like it.</md-radio-button>
+              <md-radio-button class="md-primary" value="3">3 - It's okay.</md-radio-button>
+              <md-radio-button value="2">2 - I don't like it.</md-radio-button>
+              <md-radio-button value="1">1 - I hate it!</md-radio-button>
+            </md-radio-group>
+          </md-card-actions>
+        </div>
+        <div layout="row">
+          <md-input-container>
+            <textarea ng-model="rc.data.review.comment" placeholder="Comment..."></textarea>
+          </md-input-container>
+          <div flex layout="column" layout-align="end end">
+            <md-button class="md-primary">Submit Rating</md-button>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

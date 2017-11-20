@@ -3,8 +3,20 @@ myApp.service('BeerService', function($http,$location){
   self.data = {
     keyword: '',
     beers: [],
-    currentBeer: {
-
+    enteredBeer: {
+      name: '',
+      brewery: '',
+      ibu: '',
+      abv: '',
+      style: '',
+      description: ''
+    },
+    currentBeer: {},
+    beerToRate: {},
+    review: {
+      rating: 3,
+      comment: '',
+      beerId: ''
     }
   };
 
@@ -29,13 +41,16 @@ myApp.service('BeerService', function($http,$location){
     self.data.keyword = '';
   };
 
-  self.rateBeer = (beer) => {
+  self.selectBeer = (beer) => {
     $location.path('/rate');
+    self.data.beerToRate = beer;
+    
   };
 
   self.goToManualEntry = () => {
     $location.path('/entry');
   };
+
 
 
 });

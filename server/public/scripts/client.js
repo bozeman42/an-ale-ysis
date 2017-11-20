@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp', ['ngRoute','ngMaterial', 'ngMessages','ngAnimate']);
 
 /// Routes ///
-myApp.config(function($routeProvider, $locationProvider) {
+myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
   $locationProvider.hashPrefix('');
   console.log('myApp -- config')
   $routeProvider
@@ -51,7 +51,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/entry', {
       templateUrl: '/views/templates/entry.html',
-      controller: 'RatingController as rc',
+      controller: 'EntryController as ec',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
@@ -61,4 +61,9 @@ myApp.config(function($routeProvider, $locationProvider) {
     .otherwise({
       redirectTo: 'home'
     });
+
+    // $mdThemingProvider.theme('default')
+    // .primaryPalette('amber')
+    // .backgroundPalette('brown')
+    // .accentPalette('orange');
 });

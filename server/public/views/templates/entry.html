@@ -1,1 +1,60 @@
 <div ng-include="'views/partials/nav.html'"></div>
+<div layout-gt-sm="row" flex layout-align="center center">
+  <md-card>
+    <div layout="column">
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Enter beer information...</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content layout="column">
+        <form name="beerInfo">
+          <div layout="row">
+            <md-input-container>
+              <label>Beer Name</label>
+              <input name="name" type="text" ng-model="ec.cb.name" required>
+              <div ng-messages="beerInfo.$error">
+                <div ng-message="required">Please complete this field.</div>
+              </div>
+            </md-input-container>
+            <md-input-container>
+              <label>Brewery</label>
+              <input type="text" ng-model="ec.cb.brewery" required>
+              <div ng-messages="beerInfo.$error">
+                <div ng-message="required">Please complete this field.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container>
+              <label>IBU</label>
+              <input type="number" ng-model="ec.cb.ibu">
+            </md-input-container>
+            <md-input-container>
+              <label>ABV</label>
+              <input type="number" ng-model="ec.cb.abv">
+            </md-input-container>
+            <md-input-container>
+              <select ng-model="ec.cb.style">
+                <option value="">Style...</option>
+                <option>Lager</option>
+              </select>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container flex="75">
+              <label>Description</label>
+              <textarea ng-model="ec.cb.description"></textarea>
+            </md-input-container>
+            <md-card-actions>
+              <md-button ng-click="ec.submitBeer(ec.cb)" type="submit">Submit</md-button>
+            </md-card-actions>
+          </div>
+        </form>
+      </md-card-content>
+    </div>
+  </md-card>
+  <div>
+    <img flex="33" src="https://imgflip.com/s/meme/Success-Kid.jpg">
+  </div>
+</div>
