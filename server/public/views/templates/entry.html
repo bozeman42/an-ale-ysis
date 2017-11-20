@@ -35,9 +35,11 @@
               <input type="number" ng-model="ec.cb.abv">
             </md-input-container>
             <md-input-container>
-              <select ng-model="ec.cb.style">
+              <label for="styleSelect"
+              <select name="styleSelect" id="styleSelect"
+              ng-options="style.name for style in vm.data.styles"
+              ng-model="style.id">
                 <option value="">Style...</option>
-                <option>Lager</option>
               </select>
             </md-input-container>
           </div>

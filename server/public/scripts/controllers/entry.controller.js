@@ -7,7 +7,11 @@ myApp.controller('EntryController',function(BeerService){
 
   vm.submitBeer = (beer) => {
     console.log(beer);
-    bs.rateBeer(beer);
+    bs.selectBeer(beer);
   };
 
+  vm.getStyles = () => {
+    bs.getStyles();
+  };
+  vm.getStyles();
 });

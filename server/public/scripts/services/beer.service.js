@@ -17,7 +17,8 @@ myApp.service('BeerService', function($http,$location){
       rating: 3,
       comment: '',
       beerId: ''
-    }
+    },
+    styles: []
   };
 
   self.searchBeer = (keyword) => {
@@ -51,6 +52,15 @@ myApp.service('BeerService', function($http,$location){
     $location.path('/entry');
   };
 
-
+  self.getStyles = () => {
+    $http.get('/beer/styles')
+    .then((response)=>{
+      console.log(response.data);
+      self.data.styles = response.data;
+    })
+    .catch((error)=>{
+      console.log('Failed to get styles');
+    })
+  }
 
 });
