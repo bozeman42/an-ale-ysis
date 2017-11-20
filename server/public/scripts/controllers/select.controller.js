@@ -11,7 +11,7 @@ myApp.controller('SelectController', function(BeerService){
   vm.selectBeer = (beer) => {
     vm.data.currentBeer = beer;
     console.log(vm.data.currentBeer);
-    bs.rateBeer(beer);
+    bs.selectBeer(beer);
   };
 
   vm.goToManualEntry = () => {

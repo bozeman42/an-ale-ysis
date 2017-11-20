@@ -2,7 +2,7 @@
 <div flex layout="row" layout-align="center" flex="50">
   <div layout="column">
     <div layout="row" flex-gt-xs="50" layout-align="center">
-      <div flex id="searchBox" layout="column" layout-align="center center" >
+      <div flex id="searchBox" layout="column" layout-align="center center">
         <form ng-submit="sc.searchBeer(sc.data.keyword)">
           <md-input-container>
             <label>Search</label>
@@ -19,7 +19,6 @@
   <div layout="column">
     <div ng-repeat="beer in sc.data.beers" layout-align="center" layout="row" flex-gt-xs="50">
       <md-card flex ng-click="sc.selectBeer(beer)">
-        <!-- <a href="#/rate"> -->
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{beer.name}}</span>
@@ -38,10 +37,6 @@
           <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span>
           ABV: {{beer.abv}}%
         </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button>Rate this beer</md-button>
-        </md-card-actions>
-        <!-- </a> -->
       </md-card>
       <!-- <img ng-src="{{beer.labels.medium}}">
     <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
