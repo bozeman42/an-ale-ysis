@@ -4,6 +4,7 @@ myApp.controller('EntryController',function(BeerService){
   let bs = BeerService;
   
   vm.cb = bs.data.enteredBeer;
+  vm.data = bs.data;
 
   vm.submitBeer = (beer) => {
     console.log(beer);

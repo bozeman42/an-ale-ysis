@@ -6,5 +6,9 @@ myApp.controller('RatingController',function(BeerService){
   vm.data = bs.data;
   vm.beer = bs.data.beerToRate;
 
-  
+  vm.rateBeer = (beer) => {
+    bs.rateBeer(beer);
+  };
+
+  console.log('Beer to rate:',vm.beer);
 });

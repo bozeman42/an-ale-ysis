@@ -30,4 +30,6 @@ router.get('/styles',(req,res)=>{
     }
   });
 });
+
+// POST rate the beer
 module.exports = router;

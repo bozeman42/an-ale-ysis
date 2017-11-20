@@ -19,11 +19,11 @@ myApp.controller('LoginController', function($http, $location, UserService) {
             $location.path('/user'); // http://localhost:5000/#/user
           } else {
             console.log('LoginController -- login -- failure: ', response);
-            vm.message = "Wrong!!";
+            vm.message = "The login credentials used were incorrect.";
           }
         }).catch(function(response){
           console.log('LoginController -- registerUser -- failure: ', response);
-          vm.message = "Wrong!!";
+          vm.message = "The login credentials used were incorrect.";
         });
       }
     };

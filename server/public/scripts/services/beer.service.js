@@ -8,10 +8,11 @@ myApp.service('BeerService', function($http,$location){
       brewery: '',
       ibu: '',
       abv: '',
-      style: '',
+      style: null,
       description: ''
     },
-    currentBeer: {},
+    currentBeer: {
+    },
     beerToRate: {},
     review: {
       rating: 3,
@@ -33,6 +34,7 @@ myApp.service('BeerService', function($http,$location){
     $http.get('/beer/search',config)
     .then((response) => {
       self.data.beers = response.data.data;
+      self.data.beers.forEach
       console.log(self.data.beers);
     })
     .catch((error) => {
@@ -44,6 +46,7 @@ myApp.service('BeerService', function($http,$location){
 
   self.selectBeer = (beer) => {
     $location.path('/rate');
+    console.log(beer.brewery);
     self.data.beerToRate = beer;
     
   };
@@ -51,6 +54,8 @@ myApp.service('BeerService', function($http,$location){
   self.goToManualEntry = () => {
     $location.path('/entry');
   };
+
+  // Routes
 
   self.getStyles = () => {
     $http.get('/beer/styles')
@@ -60,7 +65,25 @@ myApp.service('BeerService', function($http,$location){
     })
     .catch((error)=>{
       console.log('Failed to get styles');
+    });
+  };
+
+  self.categorizeStyle = (beer) => {
+    return {
+      id: 1,
+      name: "The One True Style",
+      description: "All in one, one for all."
+    };
+  };
+
+  self.rateBeer = (beer) => {
+    $http.post('/rate',beer)
+    .then((response)=>{
+      console.log('Beer rated!');
     })
-  }
+    .catch((error) => {
+      console.log('Failed to rate beer');
+    });
+  };
 
 });
