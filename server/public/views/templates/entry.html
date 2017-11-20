@@ -8,7 +8,7 @@
         </md-card-title-text>
       </md-card-title>
       <md-card-content layout="column">
-        <form name="beerInfo">
+        <form name="beerInfo" ng-submit="ec.submitBeer(ec.cb)" >
           <div layout="row">
             <md-input-container>
               <label>Beer Name</label>
@@ -35,9 +35,10 @@
               <input type="number" ng-model="ec.cb.abv">
             </md-input-container>
             <md-input-container>
-              <select ng-model="ec.cb.style">
-                <option value="">Style...</option>
-                <option>Lager</option>
+              <select name="styleSelect" id="styleSelect"
+              ng-options="style.name for style in ec.data.styles track by style.id"
+              ng-model="ec.cb.styleGroup" required>
+              <option value="">Select Style</option>
               </select>
             </md-input-container>
           </div>
@@ -47,7 +48,7 @@
               <textarea ng-model="ec.cb.description"></textarea>
             </md-input-container>
             <md-card-actions>
-              <md-button ng-click="ec.submitBeer(ec.cb)" type="submit">Submit</md-button>
+              <md-button type="submit">Submit</md-button>
             </md-card-actions>
           </div>
         </form>

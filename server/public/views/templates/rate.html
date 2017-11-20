@@ -5,7 +5,8 @@
       <md-card-title>
         <md-card-title-text>
           <span class="md-headline">{{rc.beer.name}}</span>
-          <span class="md-subhead">{{rc.beer.breweries[0].name}}</span>
+          <span class="md-subhead">{{rc.beer.brewery}}</span>
+          <span class="md-subhead">{{rc.beer.styleGroup.name}}</span>
           <span class="md-subhead">{{rc.beer.style.name}}</span>
         </md-card-title-text>
         <md-card-title-media>
@@ -43,7 +44,7 @@
             <textarea ng-model="rc.data.review.comment" placeholder="Comment..."></textarea>
           </md-input-container>
           <div flex layout="column" layout-align="end end">
-            <md-button class="md-primary">Submit Rating</md-button>
+            <md-button ng-click="" class="md-primary">Submit Rating</md-button>
           </div>
         </div>
       </md-card-content>
