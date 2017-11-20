@@ -3,7 +3,9 @@ let router = express.Router();
 let request = require('request');
 let API_KEY = process.env.API_KEY;
 let pool = require('../modules/pool');
-let insertBeer = require('../modules/insert.beer');
+// insertBeerAndGetId is a promise that returns the beer ID from the database
+// and inserts the beer into the database if it was not already there.
+let insertBeerAndGetId = require('../modules/insert.beer');
 
 router.get('/search', function (req, res) {
   req.query.key = API_KEY;
@@ -42,10 +44,37 @@ router.post('/rate', (req, res) => {
     console.log('This user',req.user);
     let review = req.body;
     let beer = req.body.beer;
-    insertBeer(beer)
+    insertBeerAndGetId(beer)
     .then((reviewBeerId)=>{
         review.beer_id = reviewBeerId;
         console.log('Review has beer_id of',review.beer_id);
+        let user_id = req.user.id;
+        let beer_id = review.beer_id;
+        let rating = review.rating;
+        let comment = review.comment;
+        pool.connect((connectError, db, done) => {
+          if (connectError) {
+            console.log('Error connecting', connectError);
+            res.sendStatus(500);
+          } else {
+            var queryFields = '("user_id","beer_id","rating","comment")';
+            var queryText = 'INSERT INTO "reviews" ' + queryFields + 'VALUES ($1,$2,$3,$4);';
+            db.query(queryText, [
+              user_id,    // $1
+              beer_id,    // $2
+              rating,     // $3
+              comment     // $4
+            ], (queryError, result) => {
+              done();
+              if (queryError) {
+                console.log('Error making query', queryError);
+                res.sendStatus(500);
+              } else {
+                res.sendStatus(201);
+              }
+            });
+          }
+        });
     })
     .catch((error)=>{
       // failed to get beer ID
