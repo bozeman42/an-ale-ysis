@@ -1,0 +1,47 @@
+<div ng-include="'views/partials/nav.html'"></div>
+<div class="container">
+  <p>
+    <div ng-repeat="review in rc.data.reviews">
+      <div layout-align="center" layout="row" flex-gt-xs="50">
+        <md-card flex ng-click="sc.selectBeer(beer)">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">{{review.name}} <span class="md-subhead"> by {{review.brewery}}</span></span>
+              <span class="md-headline">Rating: <strong>{{review.rating}}</strong></span>
+              <span class="md-subhead">{{review.style_name}}</span>
+              <span class="md-subhead">ABV: {{review.abv}}% <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span></span>
+              <!-- <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span> -->
+              
+            </md-card-title-text>
+            <md-card-title-media>
+              <div class="md-media-md card-media">
+                <img ng-src="{{review.imgurl}}">
+              </div>
+            </md-card-title-media>
+          </md-card-title>
+          <md-card-content>
+            <p>{{review.description}}</p>
+            <p>
+              User comment: <i>{{review.comment}}</i>
+            </p>
+          </md-card-content>
+        </md-card>
+        <!-- <img ng-src="{{beer.labels.medium}}">
+      <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
+      <p>
+        Style: {{beer.style.name}}
+      </p>
+      <p>
+        IBU:
+        <span ng-if="beer.ibu != undefined">{{beer.ibu}}</span>
+        <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span>
+      </p>
+      <p>
+        ABV: {{beer.abv}}%
+      </p>
+      <p>Description {{beer.description}}</p>
+      <hr> -->
+      </div>
+    </div>
+  </p>
+</div>

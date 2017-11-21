@@ -22,9 +22,9 @@ myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
         }
       }
     })
-    .when('/info', {
-      templateUrl: '/views/templates/info.html',
-      controller: 'InfoController',
+    .when('/reviews', {
+      templateUrl: '/views/templates/reviews.html',
+      controller: 'ReviewsController as rc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

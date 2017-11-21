@@ -19,7 +19,8 @@ myApp.service('BeerService', function($http,$location){
       comment: '',
       beer: {}
     },
-    styles: []
+    styles: [],
+    reviews: []
   };
 
   self.searchBeer = (keyword) => {
@@ -34,11 +35,19 @@ myApp.service('BeerService', function($http,$location){
     $http.get('/beer/search',config)
     .then((response) => {
       self.data.beers = response.data.data;
-      self.data.beers.forEach
+      self.data.beers.forEach((beer) => {
+        if (beer.labels) {
+          beer.imgurl = beer.labels.medium;
+        } else if (beer.breweries[0].images) {
+          beer.imgurl = beer.breweries[0].images.squareMedium;
+        } else {
+          beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
+        }
+      });
       console.log(self.data.beers);
     })
     .catch((error) => {
-      alert('ERROR IN /beer/search/ route');
+      alert('ERROR IN /beer/search/ route',error);
     });
 
     self.data.keyword = '';
@@ -83,6 +92,18 @@ myApp.service('BeerService', function($http,$location){
     })
     .catch((error) => {
       console.log('Failed to rate beer');
+    });
+  };
+
+  self.getReviews = () => {
+    $http.get('/beer/reviews')
+    .then((response) => {
+      console.log('Got reviews');
+      self.data.reviews = response.data;
+      console.log(self.data.reviews);
+    })
+    .catch((error) => {
+      console.log('Failed to get reviews',error);
     });
   };
 
