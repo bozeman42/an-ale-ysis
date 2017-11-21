@@ -4,10 +4,11 @@ myApp.controller('RatingController',function(BeerService){
   let bs = BeerService;
 
   vm.data = bs.data;
-  vm.beer = bs.data.beerToRate;
+  vm.review = bs.data.review;
+  vm.beer = bs.data.review.beer;
 
-  vm.rateBeer = (beer) => {
-    bs.rateBeer(beer);
+  vm.submitReview = (review) => {
+    bs.submitReview(review);
   };
 
   console.log('Beer to rate:',vm.beer);
