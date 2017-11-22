@@ -13,9 +13,9 @@ myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
       templateUrl: '/views/templates/register.html',
       controller: 'LoginController as lc'
     })
-    .when('/user', {
-      templateUrl: '/views/templates/user.html',
-      controller: 'UserController as uc',
+    .when('/profile', {
+      templateUrl: '/views/templates/profile.html',
+      controller: 'ProfileController as pc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

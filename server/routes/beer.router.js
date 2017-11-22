@@ -92,6 +92,7 @@ router.post('/rate', (req, res) => {
   }
 });
 
+// Gets all reviews entered by the logged in user
 router.get('/reviews',(req,res) => {
   if (req.isAuthenticated()) {
     let userId = req.user.id;
@@ -121,5 +122,35 @@ router.get('/reviews',(req,res) => {
   }
 });
 
+// Gets aggregated style ratings for the logged in user
+router.get('/style-ratings',(req,res) => {
+  if (!req.isAuthenticated) {
+    console.log('Not authenticated');
+    res.sendStatus(401);
+  } else {
+    let userId = req.user.id;
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "styles"."name", ROUND(AVG("reviews"."rating"),1) AS "rating" FROM "reviews"';
+        queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
+        queryText += ' JOIN "styles" ON "beers"."style" = "styles"."id"';
+        queryText += ' WHERE "reviews"."user_id" = $1';
+        queryText += ' GROUP BY "styles"."name";';
+        db.query(queryText, [userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  }
+})
 
 module.exports = router;

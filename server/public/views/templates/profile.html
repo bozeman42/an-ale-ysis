@@ -1,0 +1,15 @@
+<div ng-include="'views/partials/nav.html'"></div>
+<div class="container">
+
+    <h1 id="welcome" class="lead">Welcome, {{uc.userObject.userName}}!</h1>
+
+    <h2>Style Ratings</h2>
+    <div flex="75" layout="row" layout-align="space-around center">
+        <div ng-repeat="styleRating in pc.data.styleRatings">
+        <h1>{{styleRating.rating}}</h1>
+        <h2>{{styleRating.name}}</h2>
+        </div>        
+    </div>
+
+    
+</div>
