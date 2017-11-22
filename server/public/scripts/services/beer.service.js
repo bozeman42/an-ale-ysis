@@ -1,18 +1,19 @@
 myApp.service('BeerService', function($http,$location){
   let self = this;
+
+  let enteredBeerTemplate =  {
+    name: '',
+    brewery: '',
+    ibu: '',
+    abv: '',
+    style: null,
+    description: ''
+  };
+
   self.data = {
     keyword: '',
     beers: [],
-    enteredBeer: {
-      name: '',
-      brewery: '',
-      ibu: '',
-      abv: '',
-      style: null,
-      description: ''
-    },
-    currentBeer: {
-    },
+    enteredBeer: enteredBeerTemplate,
     beerToRate: {},
     review: {
       rating: 3,
@@ -22,6 +23,17 @@ myApp.service('BeerService', function($http,$location){
     styles: [],
     reviews: [],
     styleRatings: []
+  };
+
+  self.reset = () => {
+    self.data.enteredBeer = enteredBeerTemplate;
+    self.data.beers = [];
+    self.data.review = {
+      rating: 3,
+      comment: '',
+      beer: {}
+    };
+    $location.path('/profile')
   };
 
   self.searchBeer = (keyword) => {
@@ -87,7 +99,7 @@ myApp.service('BeerService', function($http,$location){
   };
 
   self.submitReview = (review) => {
-    $http.post('/beer/rate',review)
+    return $http.post('/beer/rate',review)
     .then((response)=>{
       console.log('Beer rated!');
     })
