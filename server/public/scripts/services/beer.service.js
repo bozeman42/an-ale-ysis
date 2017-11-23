@@ -1,18 +1,19 @@
 myApp.service('BeerService', function($http,$location){
   let self = this;
+
+  let enteredBeerTemplate =  {
+    name: '',
+    brewery: '',
+    ibu: '',
+    abv: '',
+    style: null,
+    description: ''
+  };
+  
   self.data = {
     keyword: '',
     beers: [],
-    enteredBeer: {
-      name: '',
-      brewery: '',
-      ibu: '',
-      abv: '',
-      style: null,
-      description: ''
-    },
-    currentBeer: {
-    },
+    enteredBeer: enteredBeerTemplate,
     beerToRate: {},
     review: {
       rating: 3,
@@ -20,7 +21,20 @@ myApp.service('BeerService', function($http,$location){
       beer: {}
     },
     styles: [],
-    reviews: []
+    reviews: [],
+    styleRatings: [],
+    ibuRatings: []
+  };
+
+  self.reset = () => {
+    self.data.enteredBeer = enteredBeerTemplate;
+    self.data.beers = [];
+    self.data.review = {
+      rating: 3,
+      comment: '',
+      beer: {}
+    };
+    $location.path('/profile')
   };
 
   self.searchBeer = (keyword) => {
@@ -86,7 +100,7 @@ myApp.service('BeerService', function($http,$location){
   };
 
   self.submitReview = (review) => {
-    $http.post('/beer/rate',review)
+    return $http.post('/beer/rate',review)
     .then((response)=>{
       console.log('Beer rated!');
     })
@@ -104,6 +118,27 @@ myApp.service('BeerService', function($http,$location){
     })
     .catch((error) => {
       console.log('Failed to get reviews',error);
+    });
+  };
+
+  self.getStyleRatings = () => {
+    $http.get('beer/style-ratings')
+    .then((response) => {
+      self.data.styleRatings = response.data;
+    })
+    .catch((error) => {
+      console.log('Failed to get style ratings');
+    });
+  };
+
+  self.getIbuRatings = () => {
+    return $http.get('beer/ibu-ratings')
+    .then((response) => {
+      self.data.ibuRatings = response.data;
+      console.log(self.data.ibuRatings);
+    })
+    .catch((error) => {
+      console.log('There has been an error getting the IBU rating data');
     });
   };
 

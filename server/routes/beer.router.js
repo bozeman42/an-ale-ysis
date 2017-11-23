@@ -92,6 +92,7 @@ router.post('/rate', (req, res) => {
   }
 });
 
+// Gets all reviews entered by the logged in user
 router.get('/reviews',(req,res) => {
   if (req.isAuthenticated()) {
     let userId = req.user.id;
@@ -101,7 +102,7 @@ router.get('/reviews',(req,res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description", "styles"."name" AS "style_name" FROM "reviews"';
+        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description", "styles"."name" AS "style_name" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
         queryText += ' JOIN "styles" ON "styles"."id" = "beers"."style"';
         queryText += ' WHERE "reviews"."user_id" = $1;';
@@ -120,6 +121,74 @@ router.get('/reviews',(req,res) => {
     res.sendStatus(401);
   }
 });
+
+// Gets aggregated style ratings for the logged in user
+router.get('/style-ratings',(req,res) => {
+  if (!req.isAuthenticated) {
+    console.log('Not authenticated');
+    res.sendStatus(401);
+  } else {
+    let userId = req.user.id;
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "styles"."name", ROUND(AVG("reviews"."rating"),1) AS "rating" FROM "reviews"';
+        queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
+        queryText += ' JOIN "styles" ON "beers"."style" = "styles"."id"';
+        queryText += ' WHERE "reviews"."user_id" = $1';
+        queryText += ' GROUP BY "styles"."name";';
+        db.query(queryText, [userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  }
+});
+
+// Returns ratings paired with IBU values.
+// for charting purposes should be in the format:
+// result = {
+// label: beerName,
+// data: [{
+//   x: ibu,
+//   y: rating
+// }
+router.get('/ibu-ratings',(req,res) => {
+  if (!req.isAuthenticated) {
+    console.log('Not authenticated');
+    res.sendStatus(401);
+  } else {
+    let userId = req.user.id;
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "beers"."ibu" AS "x", "reviews"."rating" AS "y" FROM "reviews"';
+        queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
+        queryText += ' WHERE "reviews"."user_id" = $1  AND ("beers"."ibu" IS NOT NULL)';
+        db.query(queryText, [userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  }
+});
+
 
 
 module.exports = router;
