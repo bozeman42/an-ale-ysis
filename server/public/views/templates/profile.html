@@ -4,13 +4,17 @@
     <h1 id="welcome" class="lead">Welcome, {{uc.userObject.userName}}!</h1>
 
     <h2>Style Ratings</h2>
-    <div flex="75" layout="row" layout-align="space-around center">
-        <div ng-repeat="styleRating in pc.data.styleRatings">
-        <h1>{{styleRating.rating}}</h1>
-        <h2>{{styleRating.name}}</h2>
-        </div>        
+    <div layout="column">
+        <div flex="75" layout="row" layout-align="space-around center">
+            <div ng-repeat="styleRating in pc.data.styleRatings">
+                <h1>{{styleRating.rating}}</h1>
+                <h2>{{styleRating.name}}</h2>
+            </div>
+        </div>
+        <md-content layout="row">
+            <div flex="50" id="chartContainer">
+                <canvas id="myChart" width="200" height="200"></canvas>
+            </div>
+        </md-content>
     </div>
-    HEY
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-</div>
+</div >

@@ -102,7 +102,7 @@ router.get('/reviews',(req,res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description", "styles"."name" AS "style_name" FROM "reviews"';
+        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description", "styles"."name" AS "style_name" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
         queryText += ' JOIN "styles" ON "styles"."id" = "beers"."style"';
         queryText += ' WHERE "reviews"."user_id" = $1;';
@@ -151,6 +151,44 @@ router.get('/style-ratings',(req,res) => {
       }
     });
   }
-})
+});
+
+// Returns ratings paired with IBU values.
+// for charting purposes should be in the format:
+// result = {
+// label: beerName,
+// data: [{
+//   x: ibu,
+//   y: rating
+// }
+router.get('/ibu-ratings',(req,res) => {
+  if (!req.isAuthenticated) {
+    console.log('Not authenticated');
+    res.sendStatus(401);
+  } else {
+    let userId = req.user.id;
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'SELECT "beers"."ibu" AS "x", "reviews"."rating" AS "y" FROM "reviews"';
+        queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
+        queryText += ' WHERE "reviews"."user_id" = $1  AND ("beers"."ibu" IS NOT NULL)';
+        db.query(queryText, [userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  }
+});
+
+
 
 module.exports = router;

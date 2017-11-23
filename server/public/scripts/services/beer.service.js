@@ -9,7 +9,7 @@ myApp.service('BeerService', function($http,$location){
     style: null,
     description: ''
   };
-
+  
   self.data = {
     keyword: '',
     beers: [],
@@ -22,7 +22,8 @@ myApp.service('BeerService', function($http,$location){
     },
     styles: [],
     reviews: [],
-    styleRatings: []
+    styleRatings: [],
+    ibuRatings: []
   };
 
   self.reset = () => {
@@ -128,5 +129,17 @@ myApp.service('BeerService', function($http,$location){
     .catch((error) => {
       console.log('Failed to get style ratings');
     });
-  }
+  };
+
+  self.getIbuRatings = () => {
+    return $http.get('beer/ibu-ratings')
+    .then((response) => {
+      self.data.ibuRatings = response.data;
+      console.log(self.data.ibuRatings);
+    })
+    .catch((error) => {
+      console.log('There has been an error getting the IBU rating data');
+    });
+  };
+
 });
