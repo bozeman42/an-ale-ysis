@@ -16,7 +16,7 @@ myApp.service('BeerService', function($http,$location){
     enteredBeer: enteredBeerTemplate,
     beerToRate: {},
     review: {
-      rating: 3,
+      rating: undefined,
       comment: '',
       beer: {}
     },
@@ -30,7 +30,7 @@ myApp.service('BeerService', function($http,$location){
     self.data.enteredBeer = enteredBeerTemplate;
     self.data.beers = [];
     self.data.review = {
-      rating: 3,
+      rating: null,
       comment: '',
       beer: {}
     };
