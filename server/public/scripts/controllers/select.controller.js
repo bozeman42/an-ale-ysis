@@ -9,11 +9,9 @@ myApp.controller('SelectController', function(BeerService){
   };
 
   vm.selectBeer = (beer) => {
-    beer.styleGroup = bs.categorizeStyle(beer);
     beer.api_id = beer.id;
     beer.brewery = beer.breweries[0].name;
     console.log(beer);
-    
     bs.selectBeer(beer);
   };
 

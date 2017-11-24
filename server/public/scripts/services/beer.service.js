@@ -7,6 +7,7 @@ myApp.service('BeerService', function($http,$location){
     ibu: '',
     abv: '',
     style: null,
+    category: null,
     description: ''
   };
   
@@ -16,13 +17,14 @@ myApp.service('BeerService', function($http,$location){
     enteredBeer: enteredBeerTemplate,
     beerToRate: {},
     review: {
-      rating: 3,
+      rating: undefined,
       comment: '',
       beer: {}
     },
     styles: [],
+    categories: [],
     reviews: [],
-    styleRatings: [],
+    categoryRatings: [],
     ibuRatings: []
   };
 
@@ -30,7 +32,7 @@ myApp.service('BeerService', function($http,$location){
     self.data.enteredBeer = enteredBeerTemplate;
     self.data.beers = [];
     self.data.review = {
-      rating: 3,
+      rating: null,
       comment: '',
       beer: {}
     };
@@ -84,10 +86,27 @@ myApp.service('BeerService', function($http,$location){
     $http.get('/beer/styles')
     .then((response)=>{
       console.log(response.data);
-      self.data.styles = response.data;
+      self.data.styles = response.data.data;
+      console.log('Styles',self.data.styles);
+      return self.data.styles;
     })
     .catch((error)=>{
       console.log('Failed to get styles');
+    });
+  };
+
+  self.getCategories = () => {
+    return $http.get('/beer/categories')
+    .then((response)=>{
+      console.log(response.data);
+      self.data.categories = response.data.data;
+      self.data.categories = self.data.categories.filter((category) => {
+        return (category.name != '""');
+      });
+      console.log('Categories',self.data.categories);
+    })
+    .catch((error)=>{
+      console.log('Failed to get categories');
     });
   };
 
@@ -114,6 +133,16 @@ myApp.service('BeerService', function($http,$location){
     .then((response) => {
       console.log('Got reviews');
       self.data.reviews = response.data;
+      self.data.reviews.forEach((review) => {
+        console.log(review);
+        let style = self.data.styles.filter((style) => {
+          
+          return style.id === review.style;
+        });
+        console.log(style);
+        review.styleName = style[0].name;
+        review.categoryName = style[0].category.name;
+      });
       console.log(self.data.reviews);
     })
     .catch((error) => {
@@ -121,16 +150,26 @@ myApp.service('BeerService', function($http,$location){
     });
   };
 
-  self.getStyleRatings = () => {
-    $http.get('beer/style-ratings')
+  self.getCategoryRatings = () => {
+    $http.get('beer/category-ratings')
     .then((response) => {
-      self.data.styleRatings = response.data;
+      self.data.categoryRatings = response.data;
+      console.log('Category Ratings:',self.data.categoryRatings);
+
+      self.data.categoryRatings.forEach((rating) => {
+        let ratedCategory = self.data.categories.filter((category) =>{
+          return rating.category === category.id;
+        });
+        rating.categoryName = ratedCategory[0].name;
+      });
     })
     .catch((error) => {
-      console.log('Failed to get style ratings');
+      console.log('Failed to get category ratings');
     });
   };
-
+  
+  
+  
   self.getIbuRatings = () => {
     return $http.get('beer/ibu-ratings')
     .then((response) => {
@@ -141,5 +180,11 @@ myApp.service('BeerService', function($http,$location){
       console.log('There has been an error getting the IBU rating data');
     });
   };
-
+  
+  self.filterByCategory = (categoryId) => {
+    return style.categoryId === categoryId;
+  };
+  
+  self.getStyles();
+  self.getCategories();
 });

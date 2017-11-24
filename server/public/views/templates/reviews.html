@@ -8,7 +8,8 @@
             <md-card-title-text>
               <span class="md-headline">{{review.name}} <span class="md-subhead"> by {{review.brewery}}</span></span>
               <span class="md-headline">Rating: <strong>{{review.rating}}</strong></span>
-              <span class="md-subhead">{{review.style_name}}</span>
+              <span class="md-subhead">{{review.categoryName}}</span>
+              <span class="md-subhead">{{review.styleName}}</span>
               <span class="md-subhead">ABV: {{review.abv}}% <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span></span>
               <!-- <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span> -->
               

@@ -8,6 +8,7 @@ myApp.controller('RatingController',function(BeerService){
   vm.beer = bs.data.review.beer;
 
   vm.submitReview = (review) => {
+    console.log(review);
     bs.submitReview(review)
     .then(() => {
       swal('Review Submitted','','success');
