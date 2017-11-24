@@ -25,7 +25,7 @@
               </span>
               <span class="md-subhead"> by {{beer.breweries[0].name}}</span>
               <span class="md-subhead">{{beer.style.name}}</span>
-              <span class="md-subhead">{{beer.styleGroup.name}}</span>
+              <span class="md-subhead">{{beer.style.category.name}}</span>
             </md-card-title-text>
             <md-card-title-media>
               <div layout-margin class="md-media-md card-media">
@@ -34,8 +34,7 @@
             </md-card-title-media>
           </md-card-title>
           <md-card-content>
-            <span ng-hide="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
-            <span ng-hide="beer.ibu != undefined">IBU: {{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span>
+            <span ng-show="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
             ABV: {{beer.abv}}%
           </md-card-content>
         </md-card>

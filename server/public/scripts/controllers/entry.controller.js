@@ -15,4 +15,8 @@ myApp.controller('EntryController',function(BeerService){
     bs.getStyles();
   };
   vm.getStyles();
+
+  vm.filterByCategory = (categoryId) => {
+    return bs.filterByCategory(categoryId);
+  };
 });

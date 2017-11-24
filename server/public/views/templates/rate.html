@@ -6,7 +6,7 @@
         <md-card-title-text>
           <span class="md-headline">{{rc.beer.name}}</span>
           <span class="md-subhead">{{rc.beer.brewery}}</span>
-          <span class="md-subhead">{{rc.beer.styleGroup.name}}</span>
+          <span class="md-subhead">{{rc.beer.style.category.name}}</span>
           <span class="md-subhead">{{rc.beer.style.name}}</span>
         </md-card-title-text>
         <md-card-title-media>
@@ -20,7 +20,7 @@
           <div layout="column" flex="50">
             <div layout="row" layout-align="space-around">
               <span ng-if="rc.beer.ibu != undefined">IBU: {{rc.beer.ibu}} </span>
-              <span ng-if="rc.beer.ibu === undefined">IBU (style): {{rc.beer.style.ibuMin}} - {{rc.beer.style.ibuMax}} </span>
+              <!-- <span ng-if="rc.beer.ibu === undefined">IBU (style): {{rc.beer.style.ibuMin}} - {{rc.beer.style.ibuMax}} </span> -->
               ABV: {{rc.beer.abv}}%
             </div>
             <div flex>

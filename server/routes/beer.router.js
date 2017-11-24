@@ -22,7 +22,7 @@ router.get('/search', function (req, res) {
 
 router.get('/styles',(req,res) => {
   if (req.isAuthenticated()){
-    request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/styles', qs: {key: process.env.API_KEY} }, function (error, response, body) {
+    request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/styles', qs: {key: process.env.API_KEY} }, function (error, response, body) {
       if (error) {
         console.log('Error searching!', error);
         res.sendStatus(500);
@@ -33,7 +33,22 @@ router.get('/styles',(req,res) => {
   } else {
     res.sendStatus(401);
   }
-})
+});
+
+router.get('/categories',(req,res) => {
+  if (req.isAuthenticated()){
+    request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/categories', qs: {key: process.env.API_KEY} }, function (error, response, body) {
+      if (error) {
+        console.log('Error searching!', error);
+        res.sendStatus(500);
+      } else {
+        res.send(body);
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 // router.get('/styles/update', (req, res) => {
 //   // if (req.isAuthenticated()) {
@@ -137,9 +152,8 @@ router.get('/reviews', (req, res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description", "styles"."name" AS "style_name" FROM "reviews"';
+        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."category", "beers"."style", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
-        queryText += ' JOIN "styles" ON "styles"."id" = "beers"."style"';
         queryText += ' WHERE "reviews"."user_id" = $1;';
         db.query(queryText, [userId], (queryError, result) => {
           done();
@@ -169,11 +183,10 @@ router.get('/style-ratings', (req, res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "styles"."name", ROUND(AVG("reviews"."rating"),1) AS "rating" FROM "reviews"';
+        var queryText = 'SELECT "beers"."category", ROUND(AVG("reviews"."rating"),1) AS "rating" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
-        queryText += ' JOIN "styles" ON "beers"."style" = "styles"."id"';
         queryText += ' WHERE "reviews"."user_id" = $1';
-        queryText += ' GROUP BY "styles"."name";';
+        queryText += ' GROUP BY "beers"."category";';
         db.query(queryText, [userId], (queryError, result) => {
           done();
           if (queryError) {

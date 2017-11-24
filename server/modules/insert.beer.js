@@ -13,18 +13,19 @@ let insertBeer = (beer) => {
         console.log('Error connecting', connectError);
         reject("Error connecting");
       } else {
-        var queryFields = '("name","brewery","ibu","abv","style","description","imgurl","api_id")'
-        var queryText = 'INSERT INTO "beers" ' + queryFields + 'VALUES ($1,$2,$3,$4,$5,$6,$7,$8)'
-          + 'ON CONFLICT ("api_id") DO NOTHING RETURNING "id";';
+        let queryFields = '("name","brewery","ibu","abv","category","style","description","imgurl","api_id")';
+        let queryText = 'INSERT INTO "beers" ' + queryFields + 'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)';
+        queryText += 'ON CONFLICT ("api_id") DO NOTHING RETURNING "id";';
         db.query(queryText, [
           beer.name,    // $1
           beer.brewery, // $2
           beer.ibu,     // $3
           beer.abv,     // $4
-          beer.styleGroup.id, // $5
-          beer.description, // $6
-          beer.imgurl, // $7
-          beer.api_id // $8
+          beer.style.category.id, //$5
+          beer.style.id, // $6
+          beer.description, // $7
+          beer.imgurl, // $8
+          beer.api_id // $9
         ], (queryError, result) => {
           let reviewedBeerId = 0;
           done();
