@@ -7,7 +7,7 @@ myApp.controller('ProfileController', function (UserService, BeerService) {
   vm.data = BeerService.data;
 
   
-  bs.getStyleRatings();
+  bs.getCategoryRatings();
   bs.getIbuRatings()
   .then(() => {
     let ctx = document.getElementById("myChart");

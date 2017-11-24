@@ -20,34 +20,26 @@ router.get('/search', function (req, res) {
   });
 });
 
-router.get('/styles',(req,res) => {
-  if (req.isAuthenticated()){
-    request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/styles', qs: {key: process.env.API_KEY} }, function (error, response, body) {
-      if (error) {
-        console.log('Error searching!', error);
-        res.sendStatus(500);
-      } else {
-        res.send(body);
-      }
-    });
-  } else {
-    res.sendStatus(401);
-  }
+router.get('/styles', (req, res) => {
+  request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/styles', qs: { key: process.env.API_KEY } }, function (error, response, body) {
+    if (error) {
+      console.log('Error searching!', error);
+      res.sendStatus(500);
+    } else {
+      res.send(body);
+    }
+  });
 });
 
-router.get('/categories',(req,res) => {
-  if (req.isAuthenticated()){
-    request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/categories', qs: {key: process.env.API_KEY} }, function (error, response, body) {
-      if (error) {
-        console.log('Error searching!', error);
-        res.sendStatus(500);
-      } else {
-        res.send(body);
-      }
-    });
-  } else {
-    res.sendStatus(401);
-  }
+router.get('/categories', (req, res) => {
+  request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/menu/categories', qs: { key: process.env.API_KEY } }, function (error, response, body) {
+    if (error) {
+      console.log('Error searching!', error);
+      res.sendStatus(500);
+    } else {
+      res.send(body);
+    }
+  });
 });
 
 // router.get('/styles/update', (req, res) => {
@@ -172,8 +164,8 @@ router.get('/reviews', (req, res) => {
 });
 
 // Gets aggregated style ratings for the logged in user
-router.get('/style-ratings', (req, res) => {
-  if (!req.isAuthenticated) {
+router.get('/category-ratings', (req, res) => {
+  if (!req.isAuthenticated()) {
     console.log('Not authenticated');
     res.sendStatus(401);
   } else {
@@ -183,7 +175,7 @@ router.get('/style-ratings', (req, res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "beers"."category", ROUND(AVG("reviews"."rating"),1) AS "rating" FROM "reviews"';
+        var queryText = 'SELECT "beers"."category", ROUND(AVG("reviews"."rating"),1) AS "categoryRating" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
         queryText += ' WHERE "reviews"."user_id" = $1';
         queryText += ' GROUP BY "beers"."category";';
@@ -193,6 +185,7 @@ router.get('/style-ratings', (req, res) => {
             console.log('Error making query', queryError);
             res.sendStatus(500);
           } else {
+            console.log()
             res.send(result.rows);
           }
         });

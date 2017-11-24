@@ -1,4 +1,4 @@
-myApp.service('UserService', function($http, $location){
+myApp.service('UserService', function($http, $location, BeerService){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
@@ -27,5 +27,5 @@ myApp.service('UserService', function($http, $location){
       console.log('UserService -- logout -- logged out');
       $location.path("/home");
     });
-  }
+  };
 });

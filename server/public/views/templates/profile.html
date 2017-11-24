@@ -6,9 +6,9 @@
     <h2>Style Ratings</h2>
     <div layout="column">
         <div flex="75" layout="row" layout-align="space-around center">
-            <div ng-repeat="styleRating in pc.data.styleRatings">
-                <h1>{{styleRating.rating}}</h1>
-                <h2>{{styleRating.name}}</h2>
+            <div ng-repeat="categoryRating in pc.data.categoryRatings">
+                <h1>{{categoryRating.categoryRating}}</h1>
+                <h2>{{categoryRating.categoryName}}</h2>
             </div>
         </div>
         <md-content layout="row">

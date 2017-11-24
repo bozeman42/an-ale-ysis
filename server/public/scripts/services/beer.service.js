@@ -24,7 +24,7 @@ myApp.service('BeerService', function($http,$location){
     styles: [],
     categories: [],
     reviews: [],
-    styleRatings: [],
+    categoryRatings: [],
     ibuRatings: []
   };
 
@@ -88,6 +88,7 @@ myApp.service('BeerService', function($http,$location){
       console.log(response.data);
       self.data.styles = response.data.data;
       console.log('Styles',self.data.styles);
+      return self.data.styles;
     })
     .catch((error)=>{
       console.log('Failed to get styles');
@@ -95,7 +96,7 @@ myApp.service('BeerService', function($http,$location){
   };
 
   self.getCategories = () => {
-    $http.get('/beer/categories')
+    return $http.get('/beer/categories')
     .then((response)=>{
       console.log(response.data);
       self.data.categories = response.data.data;
@@ -149,16 +150,26 @@ myApp.service('BeerService', function($http,$location){
     });
   };
 
-  self.getStyleRatings = () => {
-    $http.get('beer/style-ratings')
+  self.getCategoryRatings = () => {
+    $http.get('beer/category-ratings')
     .then((response) => {
-      self.data.styleRatings = response.data;
+      self.data.categoryRatings = response.data;
+      console.log('Category Ratings:',self.data.categoryRatings);
+
+      self.data.categoryRatings.forEach((rating) => {
+        let ratedCategory = self.data.categories.filter((category) =>{
+          return rating.category === category.id;
+        });
+        rating.categoryName = ratedCategory[0].name;
+      });
     })
     .catch((error) => {
-      console.log('Failed to get style ratings');
+      console.log('Failed to get category ratings');
     });
   };
-
+  
+  
+  
   self.getIbuRatings = () => {
     return $http.get('beer/ibu-ratings')
     .then((response) => {
@@ -169,11 +180,11 @@ myApp.service('BeerService', function($http,$location){
       console.log('There has been an error getting the IBU rating data');
     });
   };
-
+  
   self.filterByCategory = (categoryId) => {
     return style.categoryId === categoryId;
   };
-
+  
   self.getStyles();
   self.getCategories();
 });
