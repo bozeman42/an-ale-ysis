@@ -11,13 +11,15 @@ myApp.controller('ReviewsController', function($mdDialog, UserService,BeerServic
   };
 
   vm.editReview = (review) => {
+    console.log("review to edit",review);
     $mdDialog.show({
-      controller: EditReviewController,
+      locals: {review: review},
+      controller: 'EditReviewController as ec',
       templateUrl: '/views/templates/edit.dialog.html',
       parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true
-    })
+      clickOutsideToClose:true,
+      targetEvent: review
+    }).cancel('Cancel')
     .then(
       (review) => {
         swal('Success','Rating changed to '+rating+'.','success');

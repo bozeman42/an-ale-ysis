@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
   <p>
-    <div ng-repeat="review in rc.data.reviews">
+    <div ng-repeat="review in rc.data.reviews track by review.id">
       <div layout-align="center" layout="row" flex-gt-xs="50">
         <md-card flex ng-click="sc.selectBeer(beer)">
           <md-card-title>
@@ -26,6 +26,10 @@
               User comment: <i>{{review.comment}}</i>
             </p>
           </md-card-content>
+          <md-card-actions>
+            <md-button ng-click="rc.editReview(review)">Edit</md-button>
+            <md-button ng-click="rc.deleteReview(review)">Delete</md-button>
+          </md-card-actions>
         </md-card>
         <!-- <img ng-src="{{beer.labels.medium}}">
       <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
