@@ -11,7 +11,6 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
   };
 
   vm.editReview = (review) => {
-    console.log("review to edit", review);
     $mdDialog.show({
       locals: { review: review },
       controller: 'EditReviewController as ec',
@@ -19,17 +18,27 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
       parent: angular.element(document.body),
       clickOutsideToClose: true,
       targetEvent: review
-    })
-      .then((edits) => {
-        bs.submitEdits(edits)
-        .then(() => {
-          vm.getReviews();
-          swal('Success', 'Edits accepted.', 'success');
-        });
-      })
-      .catch(() => {
-        console.log('Editing cancelled');
+    }).then((edits) => {
+      bs.submitEdits(edits).then(() => {
+        swal('Success', 'Edits accepted.', 'success');
       });
+    }).catch(() => {
+      console.log('Editing cancelled');
+    });
+  };
+
+  vm.deleteReview = (reviewId) => {
+    let confirm = $mdDialog.confirm()
+    .title('Are you sure?')
+    .textContent('Are you sure you want to delete this review?')
+    .ariaLabel('Confirm delete')
+    .ok('Delete')
+    .cancel('Cancel');
+    $mdDialog.show(confirm)
+    .then(() => {
+      console.log('Decided to delete',reviewId);
+      bs.deleteReview(reviewId)
+    });
   };
 
 

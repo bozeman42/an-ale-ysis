@@ -192,10 +192,27 @@ myApp.service('BeerService', function ($http, $location) {
   self.submitEdits = (edits) => {
     return $http.put('beer/reviews/edit',edits)
     .then((response) => {
-      
+      self.getReviews()
     })
     .catch((error) => {
+      console.log('Editing failed');
+    });
+  };
 
+  self.deleteReview = (reviewId) => {
+    config = {
+      params: {
+        id: reviewId
+      }
+    };
+    console.log('Deleting review',config.params.id);
+    return $http.delete('/beer/reviews/',config)
+    .then((response) => {
+      console.log('Got response from server for delete');
+      self.getReviews();
+    })
+    .catch((error) => {
+      console.log('Failed to delete');
     });
   };
 

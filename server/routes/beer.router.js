@@ -202,9 +202,31 @@ router.put('/reviews/edit', (req, res) => {
   }
 });
 
-router.delete('/reviews/:id', (req, res) => {
+router.delete('/reviews/', (req, res) => {
   if (req.isAuthenticated()) {
-    
+    let reviewId = req.query.id;
+    let userId = req.user.id;
+    console.log("review to delete",reviewId);
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'DELETE FROM "reviews"';
+        queryText += ' WHERE "id" = $1 AND "user_id" = $2;';
+        db.query(queryText, [reviewId, userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
   }
 });
 
