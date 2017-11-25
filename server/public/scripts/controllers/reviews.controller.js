@@ -1,32 +1,35 @@
-myApp.controller('ReviewsController', function($mdDialog, UserService,BeerService) {
+myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerService) {
   console.log('ReviewsController created');
   var vm = this;
   us = UserService;
   bs = BeerService;
   vm.data = bs.data;
 
-  
+
   vm.getReviews = () => {
     bs.getReviews();
   };
 
   vm.editReview = (review) => {
-    console.log("review to edit",review);
+    console.log("review to edit", review);
     $mdDialog.show({
-      locals: {review: review},
+      locals: { review: review },
       controller: 'EditReviewController as ec',
       templateUrl: '/views/templates/edit.dialog.html',
       parent: angular.element(document.body),
-      clickOutsideToClose:true,
+      clickOutsideToClose: true,
       targetEvent: review
-    }).cancel('Cancel')
-    .then(
-      (review) => {
-        swal('Success','Rating changed to '+rating+'.','success');
-        
-        vm.getReviews();
-      }
-    );
+    })
+      .then((edits) => {
+        bs.submitEdits(edits)
+        .then(() => {
+          swal('Success', 'Rating changed to ' + edits.rating + '.', 'success');
+          vm.getReviews();
+        });
+      })
+      .catch(() => {
+        console.log('Editing cancelled');
+      });
   };
 
 

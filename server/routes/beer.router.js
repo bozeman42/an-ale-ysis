@@ -144,9 +144,12 @@ router.get('/reviews', (req, res) => {
         console.log('Error connecting', connectError);
         res.sendStatus(500);
       } else {
-        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery", "beers"."ibu","beers"."abv", "beers"."category", "beers"."style", "beers"."imgurl", "reviews"."rating", "reviews"."comment", "beers"."description" FROM "reviews"';
+        var queryText = 'SELECT "reviews"."id", "beers"."name", "beers"."brewery",';
+        queryText += ' "beers"."ibu","beers"."abv", "beers"."category", "beers"."style",';
+        queryText += ' "beers"."imgurl", "reviews"."rating", "reviews"."comment",';
+        queryText += ' "beers"."description" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
-        queryText += ' WHERE "reviews"."user_id" = $1;';
+        queryText += ' WHERE "reviews"."user_id" = $1 ORDER BY "reviews"."id";';
         db.query(queryText, [userId], (queryError, result) => {
           done();
           if (queryError) {
@@ -160,6 +163,48 @@ router.get('/reviews', (req, res) => {
     });
   } else {
     res.sendStatus(401);
+  }
+});
+
+// Edit an existing review
+// req.body = {
+//  id: reviewId,
+//  rating: editedRating,
+//  comment: editedComment
+// }
+router.put('/reviews/edit', (req, res) => {
+  if (req.isAuthenticated()) {
+    let reviewId = req.body.id;
+    let comment = req.body.comment;
+    let rating = req.body.rating;
+    let userId = req.user.id;
+    pool.connect((connectError, db, done) => {
+      if (connectError) {
+        console.log('Error connecting', connectError);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'UPDATE "reviews"';
+        queryText += ' SET "rating" = $1, "comment" = $2';
+        queryText += ' WHERE "id" = $3 AND "user_id" = $4;';
+        db.query(queryText, [rating, comment, reviewId, userId], (queryError, result) => {
+          done();
+          if (queryError) {
+            console.log('Error making query', queryError);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
+          }
+        });
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+router.delete('/reviews/:id', (req, res) => {
+  if (req.isAuthenticated()) {
+    
   }
 });
 
