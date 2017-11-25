@@ -23,8 +23,8 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
       .then((edits) => {
         bs.submitEdits(edits)
         .then(() => {
-          swal('Success', 'Rating changed to ' + edits.rating + '.', 'success');
           vm.getReviews();
+          swal('Success', 'Edits accepted.', 'success');
         });
       })
       .catch(() => {

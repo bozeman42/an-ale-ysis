@@ -192,7 +192,7 @@ myApp.service('BeerService', function ($http, $location) {
   self.submitEdits = (edits) => {
     return $http.put('beer/reviews/edit',edits)
     .then((response) => {
-
+      
     })
     .catch((error) => {
 
