@@ -13,7 +13,9 @@ myApp.service('BeerService', function ($http, $location) {
 
   self.data = {
     keyword: '',
+    searchType: 'brewery',
     beers: [],
+    breweries: [],
     enteredBeer: enteredBeerTemplate,
     beerToRate: {},
     review: {
@@ -31,12 +33,12 @@ myApp.service('BeerService', function ($http, $location) {
   self.reset = () => {
     self.data.enteredBeer = enteredBeerTemplate;
     self.data.beers = [];
+    self.data.breweries = [];
     self.data.review = {
       rating: null,
       comment: '',
       beer: {}
     };
-    $location.path('/profile')
   };
 
   self.resolveCategory = (categoryId) => {
@@ -53,35 +55,70 @@ myApp.service('BeerService', function ($http, $location) {
     return styleName;
   };
 
+  self.applyLabels = () => {
+    self.data.beers.forEach((beer) => {
+      if (beer.labels) {
+        beer.imgurl = beer.labels.medium;
+      } else if (beer.breweries[0].images) {
+        beer.imgurl = beer.breweries[0].images.squareMedium;
+      } else {
+        beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
+      }
+    });
+  };
 
-  self.searchBeer = (keyword) => {
-    console.log(keyword);
+  self.searchBeer = (keyword, searchType) => {
+    console.log('Keyword', keyword, 'searchType:', searchType);
     let config = {
       params: {
         q: keyword,
-        type: 'beer',
+        type: searchType,
         withBreweries: 'Y'
       }
     };
+    self.reset();
     $http.get('/beer/search', config)
       .then((response) => {
-        self.data.beers = response.data.data;
-        self.data.beers.forEach((beer) => {
-          if (beer.labels) {
-            beer.imgurl = beer.labels.medium;
-          } else if (beer.breweries[0].images) {
-            beer.imgurl = beer.breweries[0].images.squareMedium;
-          } else {
-            beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
-          }
-        });
-        console.log(self.data.beers);
+        if (response.data.searchType === 'beer') {
+          self.data.beers = response.data.body.data;
+          self.data.beers.forEach((beer) => {
+            if (beer.labels) {
+              beer.imgurl = beer.labels.medium;
+            } else if (beer.breweries[0].images) {
+              beer.imgurl = beer.breweries[0].images.squareMedium;
+            } else {
+              beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
+            }
+          });
+          console.log(self.data.beers);
+        } else if (response.data.searchType === 'brewery') {
+          self.data.breweries = response.data.body.data;
+          console.log('breweries',self.data.breweries);
+        }
       })
       .catch((error) => {
         alert('ERROR IN /beer/search/ route', error);
       });
 
     self.data.keyword = '';
+  };
+
+  self.getBreweryBeers = (brewery) => {
+    self.data.breweries = [brewery];
+    let config = {
+      params: {
+        breweryId: brewery.id
+      }
+    };
+    $http.get('beer/bybrewery', config)
+    .then((response) => {
+      console.log(response.data);
+      self.data.beers = response.data.data;
+      self.applyLabels();
+    })
+    .catch((error) => {
+
+    });
   };
 
   self.selectBeer = (beer) => {
@@ -190,13 +227,13 @@ myApp.service('BeerService', function ($http, $location) {
   };
 
   self.submitEdits = (edits) => {
-    return $http.put('beer/reviews/edit',edits)
-    .then((response) => {
-      self.getReviews()
-    })
-    .catch((error) => {
-      console.log('Editing failed');
-    });
+    return $http.put('beer/reviews/edit', edits)
+      .then((response) => {
+        self.getReviews()
+      })
+      .catch((error) => {
+        console.log('Editing failed');
+      });
   };
 
   self.deleteReview = (reviewId) => {
@@ -205,15 +242,15 @@ myApp.service('BeerService', function ($http, $location) {
         id: reviewId
       }
     };
-    console.log('Deleting review',config.params.id);
-    return $http.delete('/beer/reviews/',config)
-    .then((response) => {
-      console.log('Got response from server for delete');
-      self.getReviews();
-    })
-    .catch((error) => {
-      console.log('Failed to delete');
-    });
+    console.log('Deleting review', config.params.id);
+    return $http.delete('/beer/reviews/', config)
+      .then((response) => {
+        console.log('Got response from server for delete');
+        self.getReviews();
+      })
+      .catch((error) => {
+        console.log('Failed to delete');
+      });
   };
 
   self.filterByCategory = (categoryId) => {

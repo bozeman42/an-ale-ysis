@@ -1,4 +1,4 @@
-myApp.controller('RatingController',function(BeerService){
+myApp.controller('RatingController',function($location,BeerService){
   console.log('RatingController created');
   let vm = this;
   let bs = BeerService;
@@ -13,6 +13,7 @@ myApp.controller('RatingController',function(BeerService){
     .then(() => {
       swal('Review Submitted','','success');
       bs.reset();
+      $location.path('/profile');
     });
   };
 
