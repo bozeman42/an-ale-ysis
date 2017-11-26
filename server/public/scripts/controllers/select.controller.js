@@ -4,8 +4,8 @@ myApp.controller('SelectController', function(BeerService){
   let bs = BeerService;
   vm.data = bs.data;
 
-  vm.searchBeer = (keyword) => {
-    bs.searchBeer(keyword);
+  vm.searchBeer = (keyword,searchType) => {
+    bs.searchBeer(keyword,searchType);
   };
 
   vm.selectBeer = (beer) => {
@@ -19,4 +19,8 @@ myApp.controller('SelectController', function(BeerService){
     bs.goToManualEntry();
   };
   
+  vm.selectBrewery = (brewery) => {
+    bs.getBreweryBeers(brewery);
+  };
+
 });

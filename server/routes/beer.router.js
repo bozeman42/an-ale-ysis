@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let request = require('request');
-let API_KEY = process.env.API_KEY;
+const API_KEY = process.env.API_KEY;
 let pool = require('../modules/pool');
 
 // insertBeerAndGetId is a promise that returns the beer ID from the database
@@ -9,8 +9,29 @@ let pool = require('../modules/pool');
 let insertBeerAndGetId = require('../modules/insert.beer');
 
 router.get('/search', function (req, res) {
+  console.log('search',req.query);
   req.query.key = API_KEY;
   request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/search', qs: req.query }, function (error, response, body) {
+    if (error) {
+      console.log('Error searching!', error);
+      res.sendStatus(500);
+    } else {
+      let results = {
+        searchType: req.query.type,
+        body: JSON.parse(body)
+      };
+      res.send(results);
+    }
+  });
+});
+
+router.get('/bybrewery', function (req, res) {
+  console.log('Get bybrewery',req.query);
+  config = {
+    key: API_KEY,
+    withBreweries: 'Y'
+  };
+  request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/brewery/' + req.query.breweryId + '/beers', qs: config}, function (error, response, body) {
     if (error) {
       console.log('Error searching!', error);
       res.sendStatus(500);

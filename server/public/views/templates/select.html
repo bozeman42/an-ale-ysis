@@ -1,13 +1,22 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div flex layout="row" layout-align="center" flex="50">
   <div layout="column">
-    <div layout="row" flex-gt-xs="50" layout-align="center">
+    <div layout="row" flex-gt-xs="50" layout-align="center" layout-margin>
       <div flex id="searchBox" layout="column" layout-align="center center">
-        <form ng-submit="sc.searchBeer(sc.data.keyword)">
-          <md-input-container>
-            <label>Search</label>
-            <input type="search" ng-model="sc.data.keyword">
-          </md-input-container>
+        <form ng-submit="sc.searchBeer(sc.data.keyword,sc.data.searchType)">
+          <div layout="column">
+          <div layout="row" layout-align="center center">
+            <md-input-container>
+              <label>Search</label>
+              <input type="search" ng-model="sc.data.keyword">
+            </md-input-container>
+              <select name="searchType" ng-model="sc.data.searchType" required md-no-asterisk>
+                <option value="beer">by Beer Name</option>
+                <option value="brewery">by Brewery Name</option>
+              </select>
+          </div>
+          <md-button class="md-primary" type="submit">Search</md-button>
+          </div>
         </form>
         <span>OR</span>
         <md-button ng-click="sc.goToManualEntry()">Enter a beer manually...</md-button>
@@ -15,29 +24,36 @@
     </div>
   </div>
 </div>
-<div flex layout-align="center" layout="row" flex="50">
+<div flex layout-align="center" layout="row" flex="70">
   <div layout="column">
+    <div ng-repeat="brewery in sc.data.breweries">
+      <md-card flex ng-click="sc.selectBrewery(brewery)">
+        <md-card-title>
+          <span class="md-headline">{{brewery.name}}</span>
+        </md-card-title>
+      </md-card>
+    </div>
     <div ng-repeat="beer in sc.data.beers" layout="row">
-        <md-card flex ng-click="sc.selectBeer(beer)">
-          <md-card-title>
-            <md-card-title-text layout="column">
-              <span class="md-headline">{{beer.name}}
-              </span>
-              <span class="md-subhead"> by {{beer.breweries[0].name}}</span>
-              <span class="md-subhead">{{beer.style.name}}</span>
-              <span class="md-subhead">{{beer.style.category.name}}</span>
-            </md-card-title-text>
-            <md-card-title-media>
-              <div layout-margin class="md-media-md card-media">
-                <img ng-src="{{beer.imgurl}}">
-              </div>
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-content>
-            <span ng-show="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
-            ABV: {{beer.abv}}%
-          </md-card-content>
-        </md-card>
+      <md-card flex ng-click="sc.selectBeer(beer)">
+        <md-card-title>
+          <md-card-title-text layout="column">
+            <span class="md-headline">{{beer.name}}
+            </span>
+            <span class="md-subhead"> by {{beer.breweries[0].name}}</span>
+            <span class="md-subhead">{{beer.style.name}}</span>
+            <span class="md-subhead">{{beer.style.category.name}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div layout-margin class="md-media-md card-media">
+              <img ng-src="{{beer.imgurl}}">
+            </div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-content>
+          <span ng-show="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
+          ABV: {{beer.abv}}%
+        </md-card-content>
+      </md-card>
     </div>
   </div>
 </div>
