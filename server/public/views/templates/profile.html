@@ -11,8 +11,7 @@
                 <h2>{{categoryRating.categoryName}}</h2>
             </div>
         </div>
-        <canvas id="radar" class="chart chart-radar" chart-dataset-override="pc.radarDataOptions" chart-data="pc.data.crData" chart-options="pc.radarOptions" chart-labels="pc.data.crLabels">
-
+        <canvas id="radar" class="chart chart-polar-area" chart-dataset-override="pc.radarDataOptions" chart-data="pc.data.crData" chart-options="pc.radarOptions" chart-labels="pc.data.crLabels">
         </canvas>
         {{pc.data.crData}}
         {{pc.data.crLabels}}
