@@ -7,28 +7,20 @@ myApp.controller('ProfileController', function (UserService, BeerService) {
   vm.data = BeerService.data;
 
   vm.radarOptions = {
-    // color: (context) => {
-    //   let index = context.dataIndex;
-    //   let rating = context.dataset.data[index];
-    //   let color = 'black';
-    //   if (rating > 4) {
-    //     color = 'red';
-    //   } else if (rating > 3) {
-    //     color = 'orange';
-    //   } else if (rating > 2) {
-    //     color = 'blue';
-    //   }
-    //   return color;
-    // },
+
     scale: {
       ticks: {
         beginAtZero: true,
-        min: 0,
+        min: -0.5,
         max: 5,
-        stepSize: 0.5
+        stepSize: 1
       }
-    }
+    },
   };
+
+  // vm.radarDataOptions = {
+  //   lineTension: 0.1
+  // };
 
   bs.getCategoryRatings();
 
