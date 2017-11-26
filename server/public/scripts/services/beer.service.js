@@ -202,7 +202,7 @@ myApp.service('BeerService', function ($http, $location) {
     self.data.crLabels = [];
     self.data.crData = [];
     console.log('crData before',self.data.crData);
-    $http.get('beer/category-ratings')
+    return $http.get('beer/category-ratings')
       .then((response) => {
         self.data.categoryRatings = response.data;
         console.log('Category Ratings:', self.data.categoryRatings);
