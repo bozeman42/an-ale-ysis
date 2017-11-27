@@ -23,6 +23,7 @@ myApp.service('BeerService', function ($http, $location) {
       comment: '',
       beer: {}
     },
+    filterCategory: null,
     styles: [],
     categories: [],
     reviews: [],
@@ -209,12 +210,9 @@ myApp.service('BeerService', function ($http, $location) {
         self.data.categories.forEach((category) => {
           self.data.crLabels.push(category.name);
           self.data.crData.push(0);
-          console.log('crData',self.data.crData);
         });
         // new attempt
         self.data.categoryRatings.forEach((pair) => {
-          console.log('pair.category',pair.category);
-          console.log('self.data.crData[pair.category -1]',self.data.crData[pair.category - 1]);
           self.data.crData[pair.category - 1] = pair.categoryRating;
         });
         console.log('crData after',self.data.crData);

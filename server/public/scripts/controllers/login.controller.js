@@ -32,6 +32,14 @@ myApp.controller('LoginController', function ($http, $location, UserService) {
     }
   };
 
+  vm.register = () => {
+    $location.path('/register');
+  };
+
+  vm.returnToLogin = () => {
+    $location.path('/home');
+  };
+
   vm.registerUser = function () {
     console.log('LoginController -- registerUser');
     if (vm.user.username === '' || vm.user.password === '') {

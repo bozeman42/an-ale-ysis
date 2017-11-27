@@ -6,7 +6,7 @@ myApp.controller('RatingController',function($location,BeerService){
   vm.data = bs.data;
   vm.review = bs.data.review;
   vm.beer = bs.data.review.beer;
-
+  
   vm.submitReview = (review) => {
     console.log(review);
     bs.submitReview(review)

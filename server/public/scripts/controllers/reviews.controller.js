@@ -5,6 +5,7 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
   bs = BeerService;
   vm.data = bs.data;
 
+  vm.sortBy = 'added';
 
   vm.getReviews = () => {
     bs.getReviews();
