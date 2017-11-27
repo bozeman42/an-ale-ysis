@@ -52,9 +52,9 @@
             <i>{{review.comment}}</i>
           </p>
         </md-card-content>
-        <md-card-actions>
-          <md-button class="md-primary md-raised" ng-click="rc.editReview(review)">Edit</md-button>
-          <md-button class="md-warn md-raised" ng-click="rc.deleteReview(review.id)">Delete</md-button>
+        <md-card-action>
+          <md-button ng-click="rc.editReview(review)"><md-icon md-svg-src="img/icons/ic_edit_black_24px.svg" aria-label="Edit review"></md-icon></md-button>
+          <md-button ng-click="rc.deleteReview(review.id)"><md-icon md-svg-src="img/icons/ic_delete_forever_black_24px.svg" aria-label="Edit review"></md-button>
         </md-card-actions>
       </md-card>
       <!-- <img ng-src="{{beer.labels.medium}}">
