@@ -23,10 +23,13 @@ myApp.service('BeerService', function ($http, $location) {
       comment: '',
       beer: {}
     },
+    filterCategory: null,
     styles: [],
     categories: [],
     reviews: [],
     categoryRatings: [],
+    crLabels: [],
+    crData: [],
     ibuRatings: []
   };
 
@@ -195,18 +198,32 @@ myApp.service('BeerService', function ($http, $location) {
       });
   };
 
+  // get average ratings for each beer category
   self.getCategoryRatings = () => {
-    $http.get('beer/category-ratings')
+    self.data.crLabels = [];
+    self.data.crData = [];
+    console.log('crData before',self.data.crData);
+    return $http.get('beer/category-ratings')
       .then((response) => {
         self.data.categoryRatings = response.data;
         console.log('Category Ratings:', self.data.categoryRatings);
-
-        self.data.categoryRatings.forEach((rating) => {
-          let ratedCategory = self.data.categories.filter((category) => {
-            return rating.category === category.id;
-          });
-          rating.categoryName = ratedCategory[0].name;
+        self.data.categories.forEach((category) => {
+          self.data.crLabels.push(category.name);
+          self.data.crData.push(0);
         });
+        // new attempt
+        self.data.categoryRatings.forEach((pair) => {
+          self.data.crData[pair.category - 1] = pair.categoryRating;
+        });
+        console.log('crData after',self.data.crData);
+        // self.data.categoryRatings.forEach((rating) => {
+        //   let ratedCategory = self.data.categories.filter((category) => {
+        //     return rating.category === category.id;
+        //   });
+        //   rating.categoryName = ratedCategory[0].name;
+        //   self.data.crLabels.push(rating.categoryName);
+        //   self.data.crData.push(rating.categoryRating);
+        // });
       })
       .catch((error) => {
         console.log('Failed to get category ratings');

@@ -1,20 +1,21 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
 
-    <h1 id="welcome" class="lead">Welcome, {{uc.userObject.userName}}!</h1>
+    <h1 id="welcome" class="lead">Welcome, {{pc.userObject.userName}}!</h1>
 
     <h2>Style Ratings</h2>
+    <md-button class="md-primary md-raised" ng-click="pc.goToSearch()">SEARCH!!!!</md-button>
     <div layout="column">
-        <div flex="75" layout="row" layout-align="space-around center">
+        <!-- <div flex="25" layout="row" layout-align="space-around center">
             <div ng-repeat="categoryRating in pc.data.categoryRatings">
                 <h1>{{categoryRating.categoryRating}}</h1>
                 <h2>{{categoryRating.categoryName}}</h2>
             </div>
+        </div> -->
+        <div flex="50" layout="row" layout-align="space-around">
+            <canvas flex="33" id="radar" class="chart chart-radar" chart-dataset-override="pc.radarDataOptions" chart-data="pc.data.crData"
+                chart-options="pc.radarOptions" chart-labels="pc.data.crLabels"></canvas>
+            <canvas flex="33" id="myChart"></canvas>
         </div>
-        <md-content layout="row">
-            <div id="chartContainer">
-                <canvas id="myChart" width="200" height="200"></canvas>
-            </div>
-        </md-content>
     </div>
-</div >
+</div>

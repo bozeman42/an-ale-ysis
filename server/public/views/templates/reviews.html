@@ -1,37 +1,63 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
-  <p>
-    <div ng-repeat="review in rc.data.reviews track by review.id">
-      <div layout-align="center" layout="row" flex-gt-xs="50">
-        <md-card flex ng-click="sc.selectBeer(beer)">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">{{review.name}} <span class="md-subhead"> by {{review.brewery}}</span></span>
-              <span class="md-headline">Rating: <strong>{{review.rating}}</strong></span>
-              <span class="md-subhead">{{review.categoryName}}</span>
-              <span class="md-subhead">{{review.styleName}}</span>
-              <span class="md-subhead">ABV: {{review.abv}}% <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span></span>
-              <!-- <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span> -->
-              
-            </md-card-title-text>
-            <md-card-title-media>
-              <div class="md-media-md card-media">
-                <img ng-src="{{review.imgurl}}">
-              </div>
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-content>
-            <p>{{review.description}}</p>
-            <p>
-              User comment: <i>{{review.comment}}</i>
-            </p>
-          </md-card-content>
-          <md-card-actions>
-            <md-button ng-click="rc.editReview(review)">Edit</md-button>
-            <md-button ng-click="rc.deleteReview(review.id)">Delete</md-button>
-          </md-card-actions>
-        </md-card>
-        <!-- <img ng-src="{{beer.labels.medium}}">
+  <div layout="row">
+    <div layout="column">
+      <p>
+        Sort by:
+      </p>
+      <select ng-model="rc.sortBy">
+        <option value="added">Order added</option>
+        <option value="name">Name</option>
+        <option value="ibu">IBU</option>
+        <option value="abv">ABV</option>
+        <option value="rating">Rating</option>
+      </select>
+    </div>
+    <div layout="column">
+      <p>Filter by style</p>
+      <select ng-model="rc.data.filterCategory" ng-options="category.name for category in rc.data.categories track by category.id">
+        <option value="">Filter by category...</option>
+      </select>
+    </div>
+  </div>
+  <div ng-repeat="review in rc.data.reviews | orderBy: rc.sortBy: true  |filter: {category: rc.data.filterCategory.id} track by review.id">
+    <div layout-align="center" layout="row" flex-gt-xs="50">
+      <md-card flex ng-click="sc.selectBeer(beer)">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{review.name}}
+              <span class="md-subhead"> by {{review.brewery}}</span>
+            </span>
+            <span class="md-headline">Rating:
+              <strong>{{review.rating}}</strong>
+            </span>
+            <span class="md-subhead">{{review.categoryName}}</span>
+            <span class="md-subhead">{{review.styleName}}</span>
+            <span class="md-subhead">ABV: {{review.abv}}%
+              <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span>
+            </span>
+            <!-- <span ng-hide="beer.ibu != undefined">{{beer.style.ibuMin}} - {{beer.style.ibuMax}}</span> -->
+
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-md card-media">
+              <img ng-src="{{review.imgurl}}">
+            </div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-content>
+          <p>{{review.description}}</p>
+          <p>
+            User comment:
+            <i>{{review.comment}}</i>
+          </p>
+        </md-card-content>
+        <md-card-actions>
+          <md-button class="md-primary md-raised" ng-click="rc.editReview(review)">Edit</md-button>
+          <md-button class="md-warn md-raised" ng-click="rc.deleteReview(review.id)">Delete</md-button>
+        </md-card-actions>
+      </md-card>
+      <!-- <img ng-src="{{beer.labels.medium}}">
       <p>{{beer.name}} by {{beer.breweries[0].name}}</p>
       <p>
         Style: {{beer.style.name}}
@@ -46,7 +72,6 @@
       </p>
       <p>Description {{beer.description}}</p>
       <hr> -->
-      </div>
     </div>
-  </p>
+  </div>
 </div>
