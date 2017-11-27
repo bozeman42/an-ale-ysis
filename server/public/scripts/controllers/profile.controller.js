@@ -9,12 +9,37 @@ myApp.controller('ProfileController', function (UserService, BeerService) {
 
   console.log('chart defaults!', Chart.defaults.global);
 
-  Chart.defaults.global.legend;
+  // Configuration for style rating chart
+  
+  let radar_ctx = document.getElementById('radar').getContext('2d');
+  console.log('radar_ctx',radar_ctx);
+  let beerGradient = radar_ctx.createRadialGradient(radar_ctx.canvas.width / 2,radar_ctx.canvas.height / 2,0,radar_ctx.canvas.width / 2,radar_ctx.canvas.height / 2,radar_ctx.canvas.height / 2);
+  beerGradient.addColorStop(0,'rgba(0,0,0,.5');
+  beerGradient.addColorStop(0.2,'red');
+  beerGradient.addColorStop(0.4,'orange');
+  beerGradient.addColorStop(0.6,'yellow');
+  beerGradient.addColorStop(0.8,'green');
+  beerGradient.addColorStop(1,'blue');
+  
+  console.log('center point',radar_ctx.canvas.width / 2,radar_ctx.canvas.height / 2)
+
+  Chart.defaults.global.colors = [
+    'rgba(255,0,0,0.5)',
+    'rgba(0,255,0,.5)',
+    'rgba(0,0,255,.5)',
+    'rgba(128,128,0,.5)',
+    'rgba(128,0,128,.5)',
+    'rgba(255,0,0,.5)',
+    'rgba(255,0,0,.5)'
+  ];
+
+  Chart.defaults.global.elements.arc.borderColor = 'rgba(255,255,255,0.5)';
 
   vm.radarDataOptions = {
-    fillColor: "rgba(220,220,220,0.2)",
-    strokeColor: "rgba(220,220,220,1)",
-    pointColor: "rgba(220,220,220,1)",
+    backgroundColor: [beerGradient],
+    fillColor: [beerGradient],
+    strokeColor: "rgba(220,220,220,.2)",
+    pointColor: "rgba(220,220,220,.2)",
   };
 
   bs.getCategoryRatings()
@@ -23,7 +48,7 @@ myApp.controller('ProfileController', function (UserService, BeerService) {
         scale: {
           ticks: {
             beginAtZero: true,
-            min: 0,
+            min: -1,
             max: 5,
             stepSize: 1
           }
@@ -66,12 +91,22 @@ myApp.controller('ProfileController', function (UserService, BeerService) {
           scales: {
             yAxes: [{
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                stepSize: 1
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Rating'
               }
             }],
             xAxes: [{
               ticks: {
                 beginAtZero: true,
+                stepSize: 10
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'IBU',
               }
             }]
           }
