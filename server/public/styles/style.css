@@ -92,7 +92,7 @@ li a:hover {
   height: 150px;
 }
 
-#chartContainer {
-  
-}
-
+.s24 {
+  width: 24px;
+  height: 24px;
+  color: #f00; }

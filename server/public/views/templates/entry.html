@@ -6,20 +6,26 @@
         <md-card-title-text>
           <span class="md-headline">Enter beer information...</span>
         </md-card-title-text>
+        <md-card-title-media>
+            <div layout-margin class="md-media-md card-media">
+                <img ng-if="ec.data.enteredBeer.imgurl" ng-src="{{ec.data.enteredBeer.imgurl || '//:0'}}">
+              </div>
+          <md-button class="md-raised md-primary" ng-click="ec.openPicker()">Choose an image</md-button>
+        </md-card-title-media>
       </md-card-title>
       <md-card-content layout="column">
-        <form name="beerInfo" ng-submit="ec.submitBeer(ec.cb)">
+        <form name="beerInfo" ng-submit="ec.submitBeer(ec.data.enteredBeer)">
           <div layout="row">
             <md-input-container>
               <label>Beer Name</label>
-              <input name="name" type="text" ng-model="ec.cb.name" required>
+              <input name="name" type="text" ng-model="ec.data.enteredBeer.name" required>
               <div ng-messages="beerInfo.$error">
                 <div ng-message="required">Please complete this field.</div>
               </div>
             </md-input-container>
             <md-input-container>
               <label>Brewery</label>
-              <input type="text" ng-model="ec.cb.brewery" required>
+              <input type="text" ng-model="ec.data.enteredBeer.brewery" required>
               <div ng-messages="beerInfo.$error">
                 <div ng-message="required">Please complete this field.</div>
               </div>
@@ -28,21 +34,21 @@
           <div layout="row">
             <md-input-container>
               <label>IBU</label>
-              <input type="number" ng-model="ec.cb.ibu" step=0.1>
+              <input type="number" ng-model="ec.data.enteredBeer.ibu" step=0.1>
             </md-input-container>
             <md-input-container>
               <label>ABV</label>
-              <input type="number" ng-model="ec.cb.abv" step=0.1>
+              <input type="number" ng-model="ec.data.enteredBeer.abv" step=0.1>
             </md-input-container>
             <div layout="column">
               <md-input-container>
                 <select name="categorySelect" id="categorySelect" ng-options="category.name for category in ec.data.categories track by category.id"
-                  ng-model="ec.cb.category" required>
+                  ng-model="ec.data.enteredBeer.category" required>
                   <option value="">Select Category</option>
                 </select>
               </md-input-container>
-              <md-input-container ng-show="ec.cb.category">
-                <select name="styleSelect" id="styleSelect" ng-options="style.shortName for style in ec.data.styles | filter: {categoryId: ec.cb.category.id} track by style.id" ng-model="ec.cb.style"
+              <md-input-container ng-show="ec.data.enteredBeer.category">
+                <select name="styleSelect" id="styleSelect" ng-options="style.shortName for style in ec.data.styles | filter: {categoryId: ec.data.enteredBeer.category.id} track by style.id" ng-model="ec.data.enteredBeer.style"
                   required>
                   <option value="">Select Category</option>
                 </select>
@@ -52,7 +58,7 @@
           <div layout="row">
             <md-input-container flex="75">
               <label>Description</label>
-              <textarea ng-model="ec.cb.description"></textarea>
+              <textarea ng-model="ec.data.enteredBeer.description"></textarea>
             </md-input-container>
             <md-card-actions>
               <md-button class="md-primary md-raised" type="submit">Submit</md-button>

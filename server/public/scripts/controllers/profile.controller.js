@@ -15,17 +15,7 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
     $location.path('/select');
   }
 
-  let radar_ctx = document.getElementById('radar').getContext('2d');
-  console.log('radar_ctx', radar_ctx);
-  let beerGradient = radar_ctx.createRadialGradient(radar_ctx.canvas.width / 2, radar_ctx.canvas.height / 2, 0, radar_ctx.canvas.width / 2, radar_ctx.canvas.height / 2, radar_ctx.canvas.height / 2);
-  beerGradient.addColorStop(0, 'rgba(0,0,0,.5');
-  beerGradient.addColorStop(0.2, 'red');
-  beerGradient.addColorStop(0.4, 'orange');
-  beerGradient.addColorStop(0.6, 'yellow');
-  beerGradient.addColorStop(0.8, 'green');
-  beerGradient.addColorStop(1, 'blue');
 
-  console.log('center point', radar_ctx.canvas.width / 2, radar_ctx.canvas.height / 2)
 
   Chart.defaults.global.colors = [
     'rgba(255,0,0,0.5)',
@@ -48,12 +38,9 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
   };
 
   vm.radarOptions = {
-    legend: {
-      display: true
-    },
     scale: {
       ticks: {
-        beginAtZero: true,
+        // beginAtZero: true,
         min: -1,
         max: 5,
         stepSize: 1
@@ -61,17 +48,72 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
     },
   };
 
-  bs.getCategoryRatings()
+  let ratingColor = (rating) => {
+    let color = '';
+    if (rating >= 1 && rating < 2) {
+      color = '#D8D8C0';
+    } else if (rating >= 2 && rating < 3) {
+      color = '#A86048';
+    } else if (rating >= 3 && rating < 4) {
+      color = '#904830';
+    } else if (rating >= 4) {
+      color = '#783030';
+    }
+    return color;
+  };
+  console.log('Should already be resolved!');
+  bs.getCategories()
+    .then(bs.getCategoryRatings)
     .then(() => {
+      let radar_ctx = document.getElementById('radar').getContext('2d');
+      console.log('radar_ctx', radar_ctx);
 
+      // produces a color depending on the average rating per category
+      let ratingColors = vm.data.crData.map((rating) => {
+        return ratingColor(parseFloat(rating));
+      });
+
+      console.log(ratingColors);
+      console.log('crData', vm.data.crData);
+
+      vm.radarChart = new Chart(radar_ctx, {
+        type: 'bar',
+        data: {
+          labels: vm.data.crLabels,
+          datasets: [
+            {
+              backgroundColor: ratingColors,
+              data: vm.data.crData
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                min: 0,
+                max: 5,
+                stepSize: 1,
+                beginAtZero: true
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90
+              }
+            }]
+          }
+        }
+      });
     });
 
   bs.getIbuRatings()
     .then(() => {
 
-      let canvas = document.getElementById("myChart");
-      let ctx = canvas.getContext('2d');
-      vm.myChart = new Chart(ctx, {
+      let scatterChartCanvas = document.getElementById("myChart");
+      let scatterCtx = scatterChartCanvas.getContext('2d');
+      vm.myChart = new Chart(scatterCtx, {
         type: 'scatter',
         data: {
           labels: ["IBU", "Rating"],
