@@ -1,6 +1,8 @@
 myApp.service('BeerService', function ($http, $location) {
   let self = this;
 
+  console.log('BeerService created');
+
   let enteredBeerTemplate = {
     name: '',
     brewery: '',
@@ -8,6 +10,7 @@ myApp.service('BeerService', function ($http, $location) {
     abv: '',
     style: null,
     category: null,
+    imgurl: null,
     description: ''
   };
 
@@ -30,7 +33,8 @@ myApp.service('BeerService', function ($http, $location) {
     categoryRatings: [],
     crLabels: [],
     crData: [],
-    ibuRatings: []
+    ibuRatings: [],
+    ibuRangeRatings: []
   };
 
   self.reset = () => {
@@ -135,10 +139,8 @@ myApp.service('BeerService', function ($http, $location) {
     $location.path('/entry');
   };
 
-  // Routes
-
   self.getStyles = () => {
-    $http.get('/beer/styles')
+    return $http.get('/beer/styles')
       .then((response) => {
         console.log(response.data);
         self.data.styles = response.data.data;
@@ -159,6 +161,7 @@ myApp.service('BeerService', function ($http, $location) {
           return (category.name != '""');
         });
         console.log('Categories', self.data.categories);
+        return self.data.categories;
       })
       .catch((error) => {
         console.log('Failed to get categories');
@@ -205,25 +208,29 @@ myApp.service('BeerService', function ($http, $location) {
     console.log('crData before',self.data.crData);
     return $http.get('beer/category-ratings')
       .then((response) => {
-        self.data.categoryRatings = response.data;
-        console.log('Category Ratings:', self.data.categoryRatings);
-        self.data.categories.forEach((category) => {
-          self.data.crLabels.push(category.name);
-          self.data.crData.push(0);
+        response.data.forEach((rating) => {
+          self.data.crLabels.push(self.data.categories[rating.category - 1].name);
+          self.data.crData.push(rating.categoryRating);
         });
-        // new attempt
-        self.data.categoryRatings.forEach((pair) => {
-          self.data.crData[pair.category - 1] = pair.categoryRating;
-        });
-        console.log('crData after',self.data.crData);
-        // self.data.categoryRatings.forEach((rating) => {
-        //   let ratedCategory = self.data.categories.filter((category) => {
-        //     return rating.category === category.id;
-        //   });
-        //   rating.categoryName = ratedCategory[0].name;
-        //   self.data.crLabels.push(rating.categoryName);
-        //   self.data.crData.push(rating.categoryRating);
+        // self.data.categoryRatings = response.data;
+        // console.log('Category Ratings:', self.data.categoryRatings);
+        // self.data.categories.forEach((category) => {
+        //   self.data.crLabels.push(category.name);
+        //   self.data.crData.push(0);
         // });
+        // // new attempt
+        // self.data.categoryRatings.forEach((pair) => {
+        //   self.data.crData[pair.category - 1] = pair.categoryRating;
+        // });
+        // console.log('crData after',self.data.crData);
+        // // self.data.categoryRatings.forEach((rating) => {
+        // //   let ratedCategory = self.data.categories.filter((category) => {
+        // //     return rating.category === category.id;
+        // //   });
+        // //   rating.categoryName = ratedCategory[0].name;
+        // //   self.data.crLabels.push(rating.categoryName);
+        // //   self.data.crData.push(rating.categoryRating);
+        // // });
       })
       .catch((error) => {
         console.log('Failed to get category ratings');

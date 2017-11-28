@@ -1,9 +1,9 @@
-myApp.controller('EntryController',function(BeerService){
+myApp.controller('EntryController',function($scope, BeerService, FilestackService){
   console.log('EntryController created');
   let vm = this;
   let bs = BeerService;
+  let fs = FilestackService;
   
-  vm.cb = bs.data.enteredBeer;
   vm.data = bs.data;
 
   vm.submitBeer = (beer) => {
@@ -15,6 +15,16 @@ myApp.controller('EntryController',function(BeerService){
     bs.getStyles();
   };
   vm.getStyles();
+
+  vm.openPicker = () => {
+    fs.openPicker()
+    .then((imgurl) => {
+      $scope.$apply(() => {
+        vm.data.enteredBeer.imgurl = imgurl;
+      });
+      console.log('the thing in ng-src',vm.data.enteredBeer.imgurl);
+    });
+  };
 
   vm.filterByCategory = (categoryId) => {
     return bs.filterByCategory(categoryId);

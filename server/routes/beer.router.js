@@ -266,7 +266,7 @@ router.get('/category-ratings', (req, res) => {
         var queryText = 'SELECT "beers"."category", ROUND(AVG("reviews"."rating"),1) AS "categoryRating" FROM "reviews"';
         queryText += ' JOIN "beers" ON "reviews"."beer_id" = "beers"."id"';
         queryText += ' WHERE "reviews"."user_id" = $1';
-        queryText += ' GROUP BY "beers"."category";';
+        queryText += ' GROUP BY "beers"."category" ORDER BY "beers"."category";';
         db.query(queryText, [userId], (queryError, result) => {
           done();
           if (queryError) {
