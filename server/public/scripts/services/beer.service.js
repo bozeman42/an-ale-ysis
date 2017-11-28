@@ -34,7 +34,8 @@ myApp.service('BeerService', function ($http, $location) {
     crLabels: [],
     crData: [],
     ibuRatings: [],
-    ibuRangeRatings: []
+    ibuRangeRatings: [],
+    ibuRangeRatingsLabels: []
   };
 
   self.reset = () => {
@@ -46,6 +47,7 @@ myApp.service('BeerService', function ($http, $location) {
       comment: '',
       beer: {}
     };
+    self.data.ibuRangeRatings = [];
   };
 
   self.resolveCategory = (categoryId) => {
@@ -100,7 +102,7 @@ myApp.service('BeerService', function ($http, $location) {
           console.log(self.data.beers);
         } else if (response.data.searchType === 'brewery') {
           self.data.breweries = response.data.body.data;
-          console.log('breweries',self.data.breweries);
+          console.log('breweries', self.data.breweries);
         }
       })
       .catch((error) => {
@@ -118,14 +120,14 @@ myApp.service('BeerService', function ($http, $location) {
       }
     };
     $http.get('beer/bybrewery', config)
-    .then((response) => {
-      console.log(response.data);
-      self.data.beers = response.data.data;
-      self.applyLabels();
-    })
-    .catch((error) => {
+      .then((response) => {
+        console.log(response.data);
+        self.data.beers = response.data.data;
+        self.applyLabels();
+      })
+      .catch((error) => {
 
-    });
+      });
   };
 
   self.selectBeer = (beer) => {
@@ -205,7 +207,7 @@ myApp.service('BeerService', function ($http, $location) {
   self.getCategoryRatings = () => {
     self.data.crLabels = [];
     self.data.crData = [];
-    console.log('crData before',self.data.crData);
+    console.log('crData before', self.data.crData);
     return $http.get('beer/category-ratings')
       .then((response) => {
         response.data.forEach((rating) => {
@@ -243,7 +245,39 @@ myApp.service('BeerService', function ($http, $location) {
     return $http.get('beer/ibu-ratings')
       .then((response) => {
         self.data.ibuRatings = response.data;
-        console.log(self.data.ibuRatings);
+        self.data.ibuRangeRatings = [];
+        let ibuMax = 0;
+        // convert IBU value to a number and find the maximum IBU level reviewed
+        for (let i = 0; i < self.data.ibuRatings.length; i += 1) {
+          self.data.ibuRatings[i].x = parseFloat(self.data.ibuRatings[i].x);
+          ibuMax = (self.data.ibuRatings[i].x > ibuMax) ? self.data.ibuRatings[i].x : ibuMax;
+        }
+        // find the average rating for each band of 10 of IBU
+        let ratings = self.data.ibuRatings;
+        let bandTotalRatings;
+        let bandRatingsSum;
+        for (let i = 0; i <= ibuMax; i += 10) {
+          console.log('Range beginning with ',i);
+          bandTotalRatings = 0;
+          bandRatingsSum = 0;
+          for (let j = 0; j < ratings.length; j += 1) {
+            if ((ratings[j].x >= i) && (ratings[j].x < i + 10)) {
+              bandTotalRatings += 1;
+              bandRatingsSum += ratings[j].y;
+            }
+          }
+          if (bandTotalRatings !== 0) {
+            self.data.ibuRangeRatings.push( bandRatingsSum / bandTotalRatings);
+          } else {
+            self.data.ibuRangeRatings.push(0);
+          }
+          self.data.ibuRangeRatingsLabels.push(''+i+' - ' + (i+10));
+          // if (bandTotalRatings !== 0) {
+          //   self.data.ibuRangeRatings.push({y: bandRatingsSum / bandTotalRatings, x: i+5});
+          // } else {
+          //   self.data.ibuRangeRatings.push({y:0,x:i+5});
+          // }
+        }
       })
       .catch((error) => {
         console.log('There has been an error getting the IBU rating data');

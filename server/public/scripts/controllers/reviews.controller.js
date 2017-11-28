@@ -41,7 +41,10 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
       bs.deleteReview(reviewId)
     });
   };
-
-
-  vm.getReviews();
+  if (bs.data.categories[0]){
+    vm.getReviews();
+  } else {
+    Promise.all([bs.getCategories(),bs.getStyles()])
+    .then(vm.getReviews);
+  }
 });
