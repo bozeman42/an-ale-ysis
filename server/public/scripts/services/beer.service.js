@@ -246,6 +246,7 @@ myApp.service('BeerService', function ($http, $location) {
       .then((response) => {
         self.data.ibuRatings = response.data;
         self.data.ibuRangeRatings = [];
+        self.data.ibuRangeRatingsLabels = [];
         let ibuMax = 0;
         // convert IBU value to a number and find the maximum IBU level reviewed
         for (let i = 0; i < self.data.ibuRatings.length; i += 1) {
