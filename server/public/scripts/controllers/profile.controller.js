@@ -71,9 +71,11 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
           xAxes: [{
             ticks: {
               autoSkip: false,
-              maxRotation: 90
             }
           }]
+        },
+        legend: {
+          display: false
         }
       }
     });
@@ -122,6 +124,9 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
                 display: true
               }
             }],
+          },
+          legend: {
+            display: false
           }
         }
       })

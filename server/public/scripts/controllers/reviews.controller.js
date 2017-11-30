@@ -5,8 +5,12 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
   bs = BeerService;
   vm.data = bs.data;
 
-  vm.sortBy = 'added';
+  vm.sortIcon = vm.data.reverseReviewSort?'ic_keyboard_arrow_down_black_24px':'ic_keyboard_arrow_up_black_24px';
 
+  vm.reverseSort = () => {
+    vm.data.reverseReviewSort = !vm.data.reverseReviewSort;
+    vm.sortIcon = vm.data.reverseReviewSort?'ic_keyboard_arrow_down_black_24px':'ic_keyboard_arrow_up_black_24px';
+  };
   vm.getReviews = () => {
     bs.getReviews();
   };

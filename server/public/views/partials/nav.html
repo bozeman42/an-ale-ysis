@@ -1,10 +1,18 @@
 <div class="navbar">
   <div class="container" layout="row" layout-align="space-between">
     <ul>
-      <li><a href="#/profile">Your Taste Profile</a></li>
-      <li><a href="#/reviews">Your Reviews</a></li>
-      <li><a href="#/select">Rate A Beer</a></li>
+      <li>
+        <a href="#/profile">Your Taste Profile</a>
+      </li>
+      <li>
+        <a href="#/reviews">Your Reviews</a>
+      </li>
+      <li>
+        <a href="#/select">Rate A Beer</a>
+      </li>
+      <li ng-controller="LoginController as lc" ng-click="lc.userService.logout()">
+        <a href="#/home">Log Out</a>
+      </li>
     </ul>
-    <md-button ng-controller="LoginController as lc" class="btn md-secondary md-raised" ng-click="lc.userService.logout()">Log Out</md-button>
   </div>
 </div>

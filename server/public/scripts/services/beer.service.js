@@ -30,6 +30,9 @@ myApp.service('BeerService', function ($http, $location) {
     styles: [],
     categories: [],
     reviews: [],
+    sortReviewsBy: 'id',
+    reverseReviewSort: false,
+    reviewFilterText: '',
     categoryRatings: [],
     crLabels: [],
     crData: [],
@@ -214,25 +217,6 @@ myApp.service('BeerService', function ($http, $location) {
           self.data.crLabels.push(self.data.categories[rating.category - 1].name);
           self.data.crData.push(rating.categoryRating);
         });
-        // self.data.categoryRatings = response.data;
-        // console.log('Category Ratings:', self.data.categoryRatings);
-        // self.data.categories.forEach((category) => {
-        //   self.data.crLabels.push(category.name);
-        //   self.data.crData.push(0);
-        // });
-        // // new attempt
-        // self.data.categoryRatings.forEach((pair) => {
-        //   self.data.crData[pair.category - 1] = pair.categoryRating;
-        // });
-        // console.log('crData after',self.data.crData);
-        // // self.data.categoryRatings.forEach((rating) => {
-        // //   let ratedCategory = self.data.categories.filter((category) => {
-        // //     return rating.category === category.id;
-        // //   });
-        // //   rating.categoryName = ratedCategory[0].name;
-        // //   self.data.crLabels.push(rating.categoryName);
-        // //   self.data.crData.push(rating.categoryRating);
-        // // });
       })
       .catch((error) => {
         console.log('Failed to get category ratings');
@@ -258,7 +242,7 @@ myApp.service('BeerService', function ($http, $location) {
         let bandTotalRatings;
         let bandRatingsSum;
         for (let i = 0; i <= ibuMax; i += 10) {
-          console.log('Range beginning with ',i);
+          console.log('Range beginning with ', i);
           bandTotalRatings = 0;
           bandRatingsSum = 0;
           for (let j = 0; j < ratings.length; j += 1) {
@@ -268,16 +252,11 @@ myApp.service('BeerService', function ($http, $location) {
             }
           }
           if (bandTotalRatings !== 0) {
-            self.data.ibuRangeRatings.push( bandRatingsSum / bandTotalRatings);
+            self.data.ibuRangeRatings.push(bandRatingsSum / bandTotalRatings);
           } else {
             self.data.ibuRangeRatings.push(0);
           }
-          self.data.ibuRangeRatingsLabels.push(''+i+' - ' + (i+10));
-          // if (bandTotalRatings !== 0) {
-          //   self.data.ibuRangeRatings.push({y: bandRatingsSum / bandTotalRatings, x: i+5});
-          // } else {
-          //   self.data.ibuRangeRatings.push({y:0,x:i+5});
-          // }
+          self.data.ibuRangeRatingsLabels.push('' + i + ' - ' + (i + 10));
         }
       })
       .catch((error) => {

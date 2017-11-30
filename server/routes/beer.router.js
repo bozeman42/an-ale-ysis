@@ -63,49 +63,6 @@ router.get('/categories', (req, res) => {
   });
 });
 
-// router.get('/styles/update', (req, res) => {
-//   // if (req.isAuthenticated()) {
-//   request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/styles', qs: { key: process.env.API_KEY } }, function (error, response, body) {
-//     if (error) {
-//       console.log('Error searching!', error);
-//       res.sendStatus(500);
-//     } else {
-//       let queryStringParameters = '';
-//       let entries = [];
-//       let queryArguments = [];
-//       body = JSON.parse(body);
-//       let styles = body.data;
-//       for (let i = 0; i < styles.length; i += 1) {
-//         queryStringParameters = '($' + (1 + 4 * i) + ',$' + (2 + 4 * i) + ',$' + (3 + 4 * i) + ',$' + (4 + 4 * i) + ')';
-//         entries.push(queryStringParameters);
-//         queryArguments.push(styles[i].id, styles[i].name, styles[i].description, styles[i].category_id);
-//       }
-//       queryParameters = entries.join(',');
-//       pool.connect((connectError, db, done) => {
-//         if (connectError) {
-//           console.log('Error connecting', connectError);
-//           res.sendStatus(500);
-//         } else {
-//           var queryText = 'INSERT INTO "styles" ("id","name","description","category_id")';
-//           db.query(queryText, (queryError, result) => {
-//             done();
-//             if (queryError) {
-//               console.log('Error making query', queryError);
-//               res.sendStatus(500);
-//             } else {
-//               res.send(result.rows);
-//             }
-//           });
-//         }
-//       });
-//     }
-//   });
-//   // } else {
-//   // res.sendStatus(401);
-//   // }
-// });
-
-
 // POST rate the beer
 router.post('/rate', (req, res) => {
   if (req.isAuthenticated()) {

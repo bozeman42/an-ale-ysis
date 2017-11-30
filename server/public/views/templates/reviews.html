@@ -1,26 +1,31 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
-  <div layout="row">
+  <div layout="row" layout-align="start start">
+    <md-input-container>
+      <label>Filter by name</label>
+      <input type="text" ng-model="rc.data.reviewFilterText" autocomplete="off" />
+    </md-input-container>
     <div layout="column">
-      <p>
-        Sort by:
-      </p>
-      <select ng-model="rc.sortBy">
-        <option value="added">Order added</option>
+      <label>Sort by:</label>
+      <select ng-model="rc.data.sortReviewsBy">
+        <option value="id">Order added</option>
         <option value="name">Name</option>
         <option value="ibu">IBU</option>
         <option value="abv">ABV</option>
         <option value="rating">Rating</option>
       </select>
     </div>
+    <md-button class="sortOrderButton" ng-click="rc.reverseSort()">
+      <md-icon class="s24" md-svg-src="img/icons/{{rc.sortIcon}}.svg" aria-label="Edit review"></md-icon>
+    </md-button>
     <div layout="column">
-      <p>Filter by style</p>
+      <label>Filter by style</label>
       <select ng-model="rc.data.filterCategory" ng-options="category.name for category in rc.data.categories track by category.id">
         <option value="">Filter by category...</option>
       </select>
     </div>
   </div>
-  <div ng-repeat="review in rc.data.reviews | orderBy: rc.sortBy: true  |filter: {category: rc.data.filterCategory.id} track by review.id">
+  <div ng-repeat="review in rc.data.reviews | orderBy: rc.data.sortReviewsBy : rc.data.reverseReviewSort  |filter: {category: rc.data.filterCategory.id,name: rc.data.reviewFilterText} track by review.id">
     <div layout-align="center" layout="row" flex-gt-xs="50">
       <md-card flex ng-click="sc.selectBeer(beer)">
         <md-card-title>
@@ -31,6 +36,14 @@
             <span class="md-headline">Rating:
               <strong>{{review.rating}}</strong>
             </span>
+            <div layout="row">
+              <span style="color:gold"class="fa fa-star" aria-hidden="true"></span>
+              <span style="color:gold"class="fa fa-star" aria-hidden="true"></span>
+              <span style="color:gold"class="fa fa-star" aria-hidden="true"></span>
+              <span style="color:#aaa"class="fa fa-star" aria-hidden="true"></span>
+              <span style="color:#aaa"class="fa fa-star" aria-hidden="true"></span>
+
+            </div>
             <span class="md-subhead">{{review.categoryName}}</span>
             <span class="md-subhead">{{review.styleName}}</span>
             <span class="md-subhead">ABV: {{review.abv}}%
@@ -53,9 +66,12 @@
           </p>
         </md-card-content>
         <md-card-action>
-          <md-button ng-click="rc.editReview(review)"><md-icon class="s10" md-svg-src="img/icons/ic_edit_black_24px.svg" aria-label="Edit review"></md-icon></md-button>
-          <md-button ng-click="rc.deleteReview(review.id)"><md-icon md-svg-src="img/icons/ic_delete_forever_black_24px.svg" aria-label="Edit review"></md-button>
-        </md-card-actions>
+          <md-button ng-click="rc.editReview(review)">
+            <md-icon class="s10" md-svg-src="img/icons/ic_edit_black_24px.svg" aria-label="Edit review"></md-icon>
+          </md-button>
+          <md-button ng-click="rc.deleteReview(review.id)">
+            <md-icon md-svg-src="img/icons/ic_delete_forever_black_24px.svg" aria-label="Edit review"></md-button>
+          </md-card-actions>
       </md-card>
       <!-- <img ng-src="{{beer.labels.medium}}">
       <p>{{beer.name}} by {{beer.breweries[0].name}}</p>

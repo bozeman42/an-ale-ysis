@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute','ngMaterial', 'ngMessages','ngAnimate','chart.js']);
+var myApp = angular.module('myApp', ['ngRoute','ngMaterial', 'ngMessages','ngAnimate']);
 
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
@@ -19,15 +19,7 @@ myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
-        }//,
-        // getData: function(BeerService){
-          
-        //   BeerService.getCategories()
-        //   .then(BeerService.getCategoryRatings)
-        //   .then(()=> {
-        //     console.log('resolved!',BeerService.data.crLabels);
-        //   });
-        // }
+        }
       }
     })
     .when('/reviews', {
