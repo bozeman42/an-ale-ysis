@@ -37,6 +37,26 @@
               <md-radio-button value="2">2 - I don't like it.</md-radio-button>
               <md-radio-button value="1">1 - I hate it!</md-radio-button>
             </md-radio-group>
+            <div layout="column">
+              <span ng-click="rc.starRating($event)" class="md-headline star-rating-system">
+                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                  id="1" ng-class="{'gold': review.rating >= 1,'no-star': review.rating < 1}"
+                  class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                  id="2" ng-class="{'gold': review.rating >= 2,'no-star': review.rating < 2}"
+                  class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                  id="3" ng-class="{'gold': review.rating >= 3,'no-star': review.rating < 3}"
+                  class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                  id="4" ng-class="{'gold': review.rating >= 4,'no-star': review.rating < 4}"
+                  class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                  id="5" ng-class="{'gold': review.rating >= 5,'no-star': review.rating < 5}"
+                  class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
+              </span>
+              <span>{{rc.ratingMessage}}</span>
+            </div>
           </md-card-actions>
         </div>
         <div layout="row">
