@@ -109,3 +109,7 @@ li a:hover {
 .rating-icon {
   text-shadow:1px 1px 1px black;
 }
+
+.star-rating-system {
+  outline: none;
+}
