@@ -24,8 +24,8 @@
     </div>
   </div>
 </div>
-<div flex layout-align="center" layout="row" flex="70">
-  <div layout="column">
+<div layout-align="center" layout="row">
+  <div flex-gt-md="50" layout="column">
     <div ng-repeat="brewery in sc.data.breweries">
       <md-card flex ng-click="sc.selectBrewery(brewery)">
         <md-card-title>
@@ -46,27 +46,36 @@
         </md-card-content>
       </md-card>
     </div>
-    <div ng-repeat="beer in sc.data.beers" layout="row">
-      <md-card flex ng-click="sc.selectBeer(beer)">
-        <md-card-title>
-          <md-card-title-text layout="column">
-            <span class="md-headline">{{beer.name}}
-            </span>
-            <span class="md-subhead"> by {{beer.breweries[0].name}}</span>
-            <span class="md-subhead">{{beer.style.name}}</span>
-            <span class="md-subhead">{{beer.style.category.name}}</span>
-          </md-card-title-text>
-          <md-card-title-media>
-            <div layout-margin class="md-media-md card-media">
-              <img ng-src="{{beer.imgurl}}">
-            </div>
-          </md-card-title-media>
-        </md-card-title>
-        <md-card-content>
-          <span ng-show="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
-          ABV: {{beer.abv}}%
-        </md-card-content>
-      </md-card>
+
+    <div>
+        <div ng-if="sc.data.beers[0].name" layout-padding>
+            <md-input-container>
+              <label>Filter Results</label>
+              <input type="text" ng-model="sc.data.searchFilter">
+            </md-input-container>
+          </div>
+      <div ng-repeat="beer in sc.data.beers | filter: sc.data.searchFilter" layout="row">
+        <md-card flex ng-click="sc.selectBeer(beer)">
+          <md-card-title>
+            <md-card-title-text layout="column">
+              <span class="md-headline">{{beer.name}}
+              </span>
+              <span class="md-subhead"> by {{beer.breweries[0].name}}</span>
+              <span class="md-subhead">{{beer.style.name}}</span>
+              <span class="md-subhead">{{beer.style.category.name}}</span>
+            </md-card-title-text>
+            <md-card-title-media>
+              <div layout-margin class="md-media-md card-media">
+                <img ng-src="{{beer.imgurl}}">
+              </div>
+            </md-card-title-media>
+          </md-card-title>
+          <md-card-content>
+            <span ng-show="beer.ibu != undefined">IBU: {{beer.ibu}}</span>
+            ABV: {{beer.abv}}%
+          </md-card-content>
+        </md-card>
+      </div>
     </div>
   </div>
 </div>
