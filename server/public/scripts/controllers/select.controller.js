@@ -23,4 +23,8 @@ myApp.controller('SelectController', function(BeerService){
     bs.getBreweryBeers(brewery);
   };
 
+  vm.bothPresent = () => {
+    return (/*vm.data.breweries[0].name*/true  && vm.data.beers[0].name);
+  };
+
 });

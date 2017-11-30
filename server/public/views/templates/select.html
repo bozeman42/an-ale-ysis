@@ -46,14 +46,15 @@
         </md-card-content>
       </md-card>
     </div>
+
     <div>
-      <md-input-container>
-        <label>Filter Beers</label>
-        <input type="text" ng-model="sc.data.searchFilter">
-      </md-input-container>
-    </div>
-    <div>
-      <div ng-repeat="beer in sc.data.beers | filter: searchFilter" layout="row">
+        <div ng-if="sc.data.beers[0].name" layout-padding>
+            <md-input-container>
+              <label>Filter Results</label>
+              <input type="text" ng-model="sc.data.searchFilter">
+            </md-input-container>
+          </div>
+      <div ng-repeat="beer in sc.data.beers | filter: sc.data.searchFilter" layout="row">
         <md-card flex ng-click="sc.selectBeer(beer)">
           <md-card-title>
             <md-card-title-text layout="column">
