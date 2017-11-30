@@ -10,10 +10,10 @@
                 <label>Search</label>
                 <input type="search" ng-model="sc.data.keyword">
               </md-input-container>
-              <select name="searchType" ng-model="sc.data.searchType" required md-no-asterisk>
-                <option value="beer">by Beer Name</option>
-                <option value="brewery">by Brewery Name</option>
-              </select>
+              <md-radio-group name="searchType" ng-model="sc.data.searchType" required md-no-asterisk>
+                  <md-radio-button class="md-primary"  value="beer">by Beer Name</md-radio-button>
+                    <md-radio-button class="md-primary"  value="brewery">by Brewery Name</md-radio-button>
+              </md-radio-group>
               <md-button class="md-raised md-primary" type="submit">Search</md-button>
             </div>
           </div>
