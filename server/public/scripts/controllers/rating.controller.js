@@ -17,5 +17,13 @@ myApp.controller('RatingController',function($location,BeerService){
     });
   };
 
+  vm.starRating = (event) => {
+
+  };
+
+  vm.ratingHover = (event) => {
+
+  };
+
   console.log('Beer to rate:',vm.beer);
 });
