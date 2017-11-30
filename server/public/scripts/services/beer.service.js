@@ -16,7 +16,7 @@ myApp.service('BeerService', function ($http, $location) {
 
   self.data = {
     keyword: '',
-    searchType: 'brewery',
+    searchType: 'beer',
     searchFilter: '',
     beers: [],
     breweries: [],
