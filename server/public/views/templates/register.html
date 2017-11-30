@@ -1,32 +1,32 @@
 <div class="container">
-    <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h1>
-    <div layout="row" layout-align="center center">
-      <div layout="column">
-        <md-card>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">Register</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            <form ng-submit="lc.registerUser()">
-              <div layout="column">
-                <md-input-container>
-                  <label for="username">Username:</label>
-                  <input type="text" ng-model="lc.user.username" />
-                </md-input-container>
-                <md-input-container>
-                  <label for="password">Password:</label>
-                  <input type="password" ng-model="lc.user.password" />
-                </md-input-container>
-                <div>
-                  <md-button class="md-primary md-raised" type="submit" name="submit">Register</md-button>
-                  <md-button class="md-seconary md-raised" ng-click="lc.returnToLogin()">Cancel</md-button>
-                </div>
+  <h1 class="lead alert alert-danger" role="alert" ng-if="lc.message != ''">{{lc.message}}</h1>
+  <div layout="row" layout-align="center center">
+    <div layout="column">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Register</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <form ng-submit="lc.registerUser()">
+            <div layout="column">
+              <md-input-container>
+                <label for="username">Username:</label>
+                <input type="text" ng-model="lc.user.username" />
+              </md-input-container>
+              <md-input-container>
+                <label for="password">Password:</label>
+                <input type="password" ng-model="lc.user.password" />
+              </md-input-container>
+              <div>
+                <md-button class="md-primary md-raised" type="submit" name="submit">Register</md-button>
+                <md-button class="md-seconary md-raised" ng-click="lc.returnToLogin()">Cancel</md-button>
               </div>
-            </form>
-          </md-card-content>
-        </md-card>
-      </div>
+            </div>
+          </form>
+        </md-card-content>
+      </md-card>
     </div>
   </div>
+</div>

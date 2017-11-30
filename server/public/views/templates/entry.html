@@ -7,9 +7,9 @@
           <span class="md-headline">Enter beer information...</span>
         </md-card-title-text>
         <md-card-title-media>
-            <div layout-margin class="md-media-md card-media">
-                <img ng-if="ec.data.enteredBeer.imgurl" ng-src="{{ec.data.enteredBeer.imgurl || '//:0'}}">
-              </div>
+          <div layout-margin class="md-media-md card-media">
+            <img ng-if="ec.data.enteredBeer.imgurl" ng-src="{{ec.data.enteredBeer.imgurl || '//:0'}}">
+          </div>
           <md-button class="md-raised md-primary" ng-click="ec.openPicker()">Choose an image</md-button>
         </md-card-title-media>
       </md-card-title>
@@ -48,8 +48,8 @@
                 </select>
               </md-input-container>
               <md-input-container ng-show="ec.data.enteredBeer.category">
-                <select name="styleSelect" id="styleSelect" ng-options="style.shortName for style in ec.data.styles | filter: {categoryId: ec.data.enteredBeer.category.id} track by style.id" ng-model="ec.data.enteredBeer.style"
-                  required>
+                <select name="styleSelect" id="styleSelect" ng-options="style.shortName for style in ec.data.styles | filter: {categoryId: ec.data.enteredBeer.category.id} track by style.id"
+                  ng-model="ec.data.enteredBeer.style" required>
                   <option value="">Select Category</option>
                 </select>
               </md-input-container>

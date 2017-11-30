@@ -7,6 +7,7 @@ html {
   /* background-color: #783030; */
 }
 
+
 /* md-card {
   background-color: #D8D8C0;
 } */
@@ -92,7 +93,23 @@ li a:hover {
   height: 150px;
 }
 
-  .sortOrderButton {
-    min-width: 5px;
-    padding: 0;
-  }
+.sortOrderButton {
+  min-width: 5px;
+  padding: 0;
+}
+
+.gold {
+  color: gold;
+}
+
+.no-star {
+  color: #ddd;
+}
+
+.rating-icon {
+  text-shadow:1px 1px 1px black;
+}
+
+.star-rating-system {
+  outline: none;
+}
