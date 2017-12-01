@@ -60,5 +60,7 @@ myApp.controller('RatingController', function ($location, BeerService) {
     }
   };
 
+  async () =>
+
   console.log('Beer to rate:', vm.beer);
 });
