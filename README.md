@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 Link to software that is required to install the app (e.g. node).
 
 - [Node.js](https://nodejs.org/en/)
-- List other prerequisites here
+- [postgreSQL](https://www.postgresql.org/)
 - An API key from www.brewerydb.com is needed for search functionality
 
 
@@ -28,10 +28,32 @@ Steps to get the development environment running.
 4. Create the SQL tables in your database
 ```sql
 CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null UNIQUE,
-  "password" varchar(240) not null
+	"id" SERIAL PRIMARY KEY,
+  	"username" VARCHAR(80) not null UNIQUE,
+  	"password" VARCHAR(240) not null
 );
+
+CREATE TABLE "beers" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(100) NOT NULL,
+	"brewery" VARCHAR(100),
+	"ibu" INTEGER,
+	"abv" FLOAT,
+	"style" INTEGER,
+	"category" INTEGER,
+	"description" VARCHAR(1000),
+	"imgurl" VARCHAR(200),
+	"api_id" VARCHAR(10) UNIQUE
+);
+
+CREATE TABLE "reviews" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" SERIAL NOT NULL REFERENCES "users",
+	"beer_id" SERIAL NOT NULL REFERENCES "beers",
+	"rating" INTEGER NOT NULL,
+	"comment" VARCHAR(1500)
+);
+
 ```
 
 ## Screen Shot
