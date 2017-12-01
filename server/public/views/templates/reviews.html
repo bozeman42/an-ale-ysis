@@ -1,5 +1,10 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div class="container">
+  <div layout="row" layout-align="center">
+    <div flex-gt-sm="50" layout-align="start">
+      <h1>Your Reviews</h1>
+    </div>
+  </div>
   <div layout="row" layout-align="center start">
     <md-input-container>
       <label>Filter by name</label>
@@ -25,52 +30,53 @@
       </select>
     </div>
   </div>
-  <div flex layout-align="center" layout="row">
-    <div flex-xs="100" flex-sm="80" flex-md="70" flex-gt-md="50" layout="column">
-      <div ng-repeat="review in rc.data.reviews | orderBy: rc.data.sortReviewsBy : rc.data.reverseReviewSort  |filter: {category: rc.data.filterCategory.id,name: rc.data.reviewFilterText} track by review.id">
-        <md-card flex ng-click="sc.selectBeer(beer)">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">{{review.name}}
-                <span class="md-subhead"> by {{review.brewery}}</span>
-              </span>
-              <!-- <span class="md-headline">Rating: -->
-              <span class="md-headline">
-                <span ng-class="{'gold': review.rating >= 1,'no-star': review.rating < 1}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
-                <span ng-class="{'gold': review.rating >= 2,'no-star': review.rating < 2}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
-                <span ng-class="{'gold': review.rating >= 3,'no-star': review.rating < 3}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
-                <span ng-class="{'gold': review.rating >= 4,'no-star': review.rating < 4}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
-                <span ng-class="{'gold': review.rating >= 5,'no-star': review.rating < 5}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
-              </span>
-              <span class="md-subhead">{{review.categoryName}}</span>
-              <span class="md-subhead">{{review.styleName}}</span>
-              <span class="md-subhead">ABV: {{review.abv}}%
-                <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span>
-              </span>
-            </md-card-title-text>
+</div>
+<div flex layout-align="center" layout="row">
+  <div flex-xs="100" flex-sm="80" flex-md="70" flex-gt-md="50" layout="column">
+    <div ng-repeat="review in rc.data.reviews | orderBy: rc.data.sortReviewsBy : rc.data.reverseReviewSort  |filter: {category: rc.data.filterCategory.id,name: rc.data.reviewFilterText} track by review.id">
+      <md-card flex ng-click="sc.selectBeer(beer)">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{review.name}}
+              <span class="md-subhead"> by {{review.brewery}}</span>
+            </span>
+            <!-- <span class="md-headline">Rating: -->
+            <span class="md-headline">
+              <span ng-class="{'gold': review.rating >= 1,'no-star': review.rating < 1}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
+              <span ng-class="{'gold': review.rating >= 2,'no-star': review.rating < 2}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
+              <span ng-class="{'gold': review.rating >= 3,'no-star': review.rating < 3}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
+              <span ng-class="{'gold': review.rating >= 4,'no-star': review.rating < 4}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
+              <span ng-class="{'gold': review.rating >= 5,'no-star': review.rating < 5}" class="fa fa-beer rating-icon" aria-hidden="true"></span>
+            </span>
+            <span class="md-subhead">{{review.categoryName}}</span>
+            <span class="md-subhead">{{review.styleName}}</span>
+            <span class="md-subhead">ABV: {{review.abv}}%
+              <span ng-if="review.ibu != undefined"> IBU: {{review.ibu}}</span>
+            </span>
+          </md-card-title-text>
 
-            <md-card-title-media>
-              <div class="md-media-md card-media">
-                <img class="beer-img" ng-src="{{review.imgurl}}">
-              </div>
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-content>
-            <p>{{review.description}}</p>
-            <p>
-              User comment:
-              <i>{{review.comment}}</i>
-            </p>
-          </md-card-content>
-          <md-card-actions>
-            <md-button ng-click="rc.editReview(review)">
-              <md-icon class="s10" md-svg-src="img/icons/ic_edit_black_24px.svg" aria-label="Edit review"></md-icon>
-            </md-button>
-            <md-button ng-click="rc.deleteReview(review.id)">
-              <md-icon md-svg-src="img/icons/ic_delete_forever_black_24px.svg" aria-label="Edit review"></md-button>
-          </md-card-actions>
-        </md-card>
-      </div>
+          <md-card-title-media>
+            <div class="md-media-md card-media">
+              <img class="beer-img" ng-src="{{review.imgurl}}">
+            </div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-content>
+          <p>{{review.description}}</p>
+          <p>
+            User comment:
+            <i>{{review.comment}}</i>
+          </p>
+        </md-card-content>
+        <md-card-actions>
+          <md-button ng-click="rc.editReview(review)">
+            <md-icon class="s10" md-svg-src="img/icons/ic_edit_black_24px.svg" aria-label="Edit review"></md-icon>
+          </md-button>
+          <md-button ng-click="rc.deleteReview(review.id)">
+            <md-icon md-svg-src="img/icons/ic_delete_forever_black_24px.svg" aria-label="Edit review"></md-button>
+        </md-card-actions>
+      </md-card>
     </div>
   </div>
+</div>
 </div>
