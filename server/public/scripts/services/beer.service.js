@@ -16,7 +16,8 @@ myApp.service('BeerService', function ($http, $location) {
 
   self.data = {
     keyword: '',
-    searchType: 'brewery',
+    searchType: 'beer',
+    searchFilter: '',
     beers: [],
     breweries: [],
     enteredBeer: enteredBeerTemplate,
@@ -43,6 +44,7 @@ myApp.service('BeerService', function ($http, $location) {
 
   self.reset = () => {
     self.data.enteredBeer = enteredBeerTemplate;
+    self.data.searchFilter = '';
     self.data.beers = [];
     self.data.breweries = [];
     self.data.review = {

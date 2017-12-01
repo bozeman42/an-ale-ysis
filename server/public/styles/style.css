@@ -98,16 +98,18 @@ li a:hover {
   padding: 0;
 }
 
+
 .gold {
   color: gold;
 }
 
 .no-star {
-  color: #ddd;
+  color: #aaa;
 }
 
 .rating-icon {
   text-shadow:1px 1px 1px black;
+  display: inline-block;
 }
 
 .star-rating-system {
