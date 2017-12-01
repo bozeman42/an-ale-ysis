@@ -24,7 +24,9 @@ myApp.controller('RatingController', function ($location, BeerService) {
   };
 
   vm.starRating = (event) => {
-    vm.review.rating = parseInt(event.target.id);
+    if (parseInt(event.target.id)){
+      vm.review.rating = parseInt(event.target.id);
+    }
   };
 
   vm.ratingLeave = () => {
@@ -59,6 +61,8 @@ myApp.controller('RatingController', function ($location, BeerService) {
       }
     }
   };
+
+  async () =>
 
   console.log('Beer to rate:', vm.beer);
 });

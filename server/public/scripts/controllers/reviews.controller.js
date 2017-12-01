@@ -22,7 +22,8 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
       templateUrl: '/views/templates/edit.dialog.html',
       parent: angular.element(document.body),
       clickOutsideToClose: true,
-      targetEvent: review
+      targetEvent: review,
+      onShowing: () => {console.log(this)}
     }).then((edits) => {
       bs.submitEdits(edits).then(() => {
         swal('Success', 'Edits accepted.', 'success');

@@ -29,40 +29,33 @@
               </p>
             </div>
           </div>
-          <md-card-actions flex="75" layout-gt-xs="row" layout-align="space-around">
-            <md-radio-group flex layout="column" ng-model="rc.review.rating" required>
-              <md-radio-button class="md-primary" value="5">5 - I love it!</md-radio-button>
-              <md-radio-button class="md-primary" value="4">4 - I like it.</md-radio-button>
-              <md-radio-button class="md-primary" value="3">3 - It's okay.</md-radio-button>
-              <md-radio-button value="2">2 - I don't like it.</md-radio-button>
-              <md-radio-button value="1">1 - I hate it!</md-radio-button>
-            </md-radio-group>
+          <md-card-actions flex="75" layout="column" layout-align="space-around">
             <div layout="column">
-              <span ng-click="rc.starRating($event)" class="md-headline star-rating-system">
-                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+              <span ng-mouseleave="rc.ratingLeave()" ng-click="rc.starRating($event)" class="md-headline star-rating-system">
+                <span  ng-mouseenter="rc.ratingHover($event)" 
                   id="1" ng-class="{'gold': review.rating >= 1,'no-star': review.rating < 1}"
                   class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
-                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                <span  ng-mouseenter="rc.ratingHover($event)" 
                   id="2" ng-class="{'gold': review.rating >= 2,'no-star': review.rating < 2}"
                   class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
-                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                <span  ng-mouseenter="rc.ratingHover($event)" 
                   id="3" ng-class="{'gold': review.rating >= 3,'no-star': review.rating < 3}"
                   class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
-                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                <span  ng-mouseenter="rc.ratingHover($event)" 
                   id="4" ng-class="{'gold': review.rating >= 4,'no-star': review.rating < 4}"
                   class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
-                <span ng-mouseleave="rc.ratingLeave()" ng-mouseenter="rc.ratingHover($event)" 
+                <span  ng-mouseenter="rc.ratingHover($event)" 
                   id="5" ng-class="{'gold': review.rating >= 5,'no-star': review.rating < 5}"
                   class="fa fa-beer rating-icon no-star" aria-hidden="true"></span>
               </span>
               <span>{{rc.ratingMessage}}</span>
             </div>
+            <md-input-container>
+              <textarea ng-model="rc.review.comment" placeholder="Comment..."></textarea>
+            </md-input-container>
           </md-card-actions>
         </div>
         <div layout="row">
-          <md-input-container>
-            <textarea ng-model="rc.review.comment" placeholder="Comment..."></textarea>
-          </md-input-container>
           <div flex layout="column" layout-align="end end">
             <md-button ng-click="rc.submitReview(rc.review)" class="md-primary">Submit Rating</md-button>
           </div>

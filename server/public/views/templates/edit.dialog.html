@@ -1,4 +1,4 @@
-<md-dialog aria-label="Edit your review">
+<md-dialog flex-gt-md="40" flex-md="50" flex-sm="60" flex-xs="100" aria-label="Edit your review">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -13,14 +13,10 @@
       <md-card flex>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{ec.review.name}}
-              <span class="md-subhead"> by {{ec.review.brewery}}</span>
-            </span>
+            <span class="md-headline">{{ec.review.name}}</span>
+            <span class="md-subhead">{{ec.review.brewery}}</span>
             <span class="md-subhead">{{ec.review.categoryName}}</span>
             <span class="md-subhead">{{ec.review.styleName}}</span>
-            <span class="md-subhead">ABV: {{ec.review.abv}}%
-              <span ng-if="ec.review.ibu != undefined"> IBU: {{ec.review.ibu}}</span>
-            </span>
           </md-card-title-text>
           <md-card-title-media>
             <div class="md-media-md card-media">
@@ -28,22 +24,37 @@
             </div>
           </md-card-title-media>
         </md-card-title>
-        <md-card-content>
-          <p>{{ec.review.description}}</p>
-          <p layout="row" layout-align="space-around center">
-            <md-radio-group flex layout="column" ng-model="ec.edits.rating" required>
-              <md-radio-button class="md-primary" value="5">5 - I love it!</md-radio-button>
-              <md-radio-button class="md-primary" value="4">4 - I like it.</md-radio-button>
-              <md-radio-button class="md-primary" value="3">3 - It's okay.</md-radio-button>
-              <md-radio-button value="2">2 - I don't like it.</md-radio-button>
-              <md-radio-button value="1">1 - I hate it!</md-radio-button>
-            </md-radio-group>
+        <div layout="row">
+          <md-card-content flex="50">
+            <div layout="row">
+              <div layout="column" flex>
+                <div layout="row" layout-align="start">
+                  <span flex="30" ng-if="ec.review.ibu != undefined"> IBU: {{ec.review.ibu}}</span>
+                  <span flex="30" ng-if="ec.review.abv != undefined">ABV: {{ec.review.abv}}%</span>
+                </div>
+                <div flex>
+                  <p>{{ec.review.description}}</p>
+                </div>
+              </div>
+            </div>
+          </md-card-content>
+          <md-card-actions flex="75" layout="column">
+            <div layout="column">
+              <span ng-mouseleave="ec.ratingLeave()" ng-click="ec.starRating($event)" class="md-headline star-rating-system">
+                <span ng-mouseenter="ec.ratingHover($event)" id="1" class="fa fa-beer dialog-rating-icon rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseenter="ec.ratingHover($event)" id="2" class="fa fa-beer dialog-rating-icon rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseenter="ec.ratingHover($event)" id="3" class="fa fa-beer dialog-rating-icon rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseenter="ec.ratingHover($event)" id="4" class="fa fa-beer dialog-rating-icon rating-icon no-star" aria-hidden="true"></span>
+                <span ng-mouseenter="ec.ratingHover($event)" id="5" class="fa fa-beer dialog-rating-icon rating-icon no-star" aria-hidden="true"></span>
+              </span>
+              <span>{{ec.ratingMessage}}</span>
+            </div>
             <md-input-container>
               <label>Edit Comment</label>
               <textarea ng-model="ec.edits.comment"></textarea>
             </md-input-container>
-          </p>
-        </md-card-content>
+          </md-card-actions>
+        </div>
       </md-card>
     </md-dialog-content>
 
