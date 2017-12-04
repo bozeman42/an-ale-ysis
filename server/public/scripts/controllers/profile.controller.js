@@ -12,13 +12,13 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
   let ratingColor = (rating) => {
     let color = '';
     if (rating >= 1 && rating < 2) {
-      color = '#D8D8C0';
+      color = '#FFAB37';
     } else if (rating >= 2 && rating < 3) {
-      color = '#A86048';
+      color = '#C9715B';
     } else if (rating >= 3 && rating < 4) {
-      color = '#904830';
+      color = '#DD7639';
     } else if (rating >= 4) {
-      color = '#783030';
+      color = '#AD859D';
     }
     return color;
   };
