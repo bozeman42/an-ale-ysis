@@ -21,14 +21,16 @@ html {
   background: #333333;
   color: #DDDDDD;
   padding: 15px;
-  background: linear-gradient(to right, #903030 , #783030, #904830, #A86048);
+  background: linear-gradient(to right, #FAC937 , #F0C030, #F0A830, #D89018);
 }
 
 .md-button.md-primary.md-raised {
-  background-color: #783030;
+  background-color: #F0A830;
+  color: black;
 }
 .md-button.md-primary.md-raised:not([disabled]):hover, .md-button.md-primary.md-raised.md-focused {
-  background-color: #903030;
+  background-color: #FAC937;
+  color: black;
 }
 
 #entryForm {
@@ -67,7 +69,7 @@ html {
   background: #333333;
   width: 100%;
   border-radius: 0px;
-  background: linear-gradient(to right, #903030 , #783030, #904830, #A86048);
+  background: linear-gradient(to right, #FAC937 , #F0C030, #F0A830, #D89018);
 }
 
 .navbar ul {
@@ -83,7 +85,7 @@ html {
 
 .navbar li a {
   display: block;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
