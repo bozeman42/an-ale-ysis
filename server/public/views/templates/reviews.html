@@ -34,7 +34,7 @@
 <div flex layout-align="center" layout="row">
   <div flex-xs="100" flex-sm="80" flex-md="70" flex-gt-md="50" layout="column">
     <div ng-repeat="review in rc.data.reviews | orderBy: rc.data.sortReviewsBy : rc.data.reverseReviewSort  |filter: {category: rc.data.filterCategory.id,name: rc.data.reviewFilterText} track by review.id">
-      <md-card flex ng-click="sc.selectBeer(beer)">
+      <md-card flex>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{review.name}}
@@ -63,7 +63,7 @@
         </md-card-title>
         <md-card-content>
           <p>{{review.description}}</p>
-          <p>
+          <p ng-if="review.comment">
             User comment:
             <i>{{review.comment}}</i>
           </p>

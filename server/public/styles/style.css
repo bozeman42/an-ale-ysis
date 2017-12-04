@@ -18,9 +18,17 @@ html {
 }
 
 .instructions {
-  background-color: #333333;
+  background: #333333;
   color: #DDDDDD;
   padding: 15px;
+  background: linear-gradient(to right, #903030 , #783030, #904830, #A86048);
+}
+
+.md-button.md-primary.md-raised {
+  background-color: #783030;
+}
+.md-button.md-primary.md-raised:not([disabled]):hover, .md-button.md-primary.md-raised.md-focused {
+  background-color: #903030;
 }
 
 #entryForm {
@@ -56,9 +64,10 @@ html {
 }
 
 .navbar {
-  background-color: #333333;
+  background: #333333;
   width: 100%;
   border-radius: 0px;
+  background: linear-gradient(to right, #903030 , #783030, #904830, #A86048);
 }
 
 .navbar ul {
@@ -117,5 +126,9 @@ navbar li a:hover {
 }
 
 #header-img {
-  height: 20vh;
+  height: 16vh;
+}
+
+md-toast {
+  position: fixed !important;
 }
