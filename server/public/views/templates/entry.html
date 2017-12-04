@@ -18,14 +18,14 @@
           <div layout="row">
             <md-input-container>
               <label>Beer Name</label>
-              <input name="name" type="text" ng-model="ec.data.enteredBeer.name" required>
+              <input name="beername" type="text" ng-model="ec.data.enteredBeer.name" required>
               <div ng-messages="beerInfo.$error">
                 <div ng-message="required">Please complete this field.</div>
               </div>
             </md-input-container>
             <md-input-container>
               <label>Brewery</label>
-              <input type="text" ng-model="ec.data.enteredBeer.brewery" required>
+              <input name="brewery" type="text" ng-model="ec.data.enteredBeer.brewery" required>
               <div ng-messages="beerInfo.$error">
                 <div ng-message="required">Please complete this field.</div>
               </div>
@@ -34,7 +34,7 @@
           <div layout="row">
             <md-input-container>
               <label>IBU</label>
-              <input type="number" ng-model="ec.data.enteredBeer.ibu" step=0.1>
+              <input name="ibu" type="number" ng-model="ec.data.enteredBeer.ibu" step=0.1>
             </md-input-container>
             <md-input-container>
               <label>ABV</label>

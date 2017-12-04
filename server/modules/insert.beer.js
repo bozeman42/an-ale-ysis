@@ -6,7 +6,6 @@ let pool = require('../modules/pool');
 let getBeerId = require('../modules/get-beer-id');
 
 let insertBeer = (beer) => {
-  console.log('inserting beer');
   let beerId = new Promise((resolve, reject) => {
     pool.connect((connectError, db, done) => {
       if (connectError) {
@@ -37,14 +36,11 @@ let insertBeer = (beer) => {
             if (result.rows[0]) {
               // row was added. Return the ID of the new row to add to the review
               reviewedBeerId = result.rows[0].id;
-              console.log('Beer was added. ID:', reviewedBeerId);
             } else {
               // row already existed. Need to get ID of existing row. Find by api_id.
               resolve(getBeerId(beer.api_id));
-              console.log('Beer already existed. ID:', reviewedBeerId);
             }
           }
-          console.log('reviewedBeerId', reviewedBeerId);
           resolve(reviewedBeerId);
         });
       }

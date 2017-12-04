@@ -1,8 +1,6 @@
 myApp.service('BeerService', function ($http, $location) {
   let self = this;
 
-  console.log('BeerService created');
-
   let enteredBeerTemplate = {
     name: '',
     brewery: '',
@@ -10,7 +8,7 @@ myApp.service('BeerService', function ($http, $location) {
     abv: '',
     style: null,
     category: null,
-    imgurl: null,
+    imgurl: 'img/anALE-alysisblack-01.svg',
     description: ''
   };
 
@@ -76,13 +74,13 @@ myApp.service('BeerService', function ($http, $location) {
       } else if (beer.breweries[0].images) {
         beer.imgurl = beer.breweries[0].images.squareMedium;
       } else {
-        beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
+        // beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
+        beer.imgurl = 'img/anALE-alysisblack-01.svg';
       }
     });
   };
 
   self.searchBeer = (keyword, searchType) => {
-    console.log('Keyword', keyword, 'searchType:', searchType);
     let config = {
       params: {
         q: keyword,
@@ -95,19 +93,9 @@ myApp.service('BeerService', function ($http, $location) {
       .then((response) => {
         if (response.data.searchType === 'beer') {
           self.data.beers = response.data.body.data;
-          self.data.beers.forEach((beer) => {
-            if (beer.labels) {
-              beer.imgurl = beer.labels.medium;
-            } else if (beer.breweries[0].images) {
-              beer.imgurl = beer.breweries[0].images.squareMedium;
-            } else {
-              beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
-            }
-          });
-          console.log(self.data.beers);
+          self.applyLabels();
         } else if (response.data.searchType === 'brewery') {
           self.data.breweries = response.data.body.data;
-          console.log('breweries', self.data.breweries);
         }
       })
       .catch((error) => {
@@ -126,7 +114,6 @@ myApp.service('BeerService', function ($http, $location) {
     };
     $http.get('beer/bybrewery', config)
       .then((response) => {
-        console.log(response.data);
         self.data.beers = response.data.data;
         self.applyLabels();
       })
@@ -137,7 +124,6 @@ myApp.service('BeerService', function ($http, $location) {
 
   self.selectBeer = (beer) => {
     $location.path('/rate');
-    console.log(beer.brewery);
     self.data.review.beer = beer;
 
   };
@@ -149,9 +135,7 @@ myApp.service('BeerService', function ($http, $location) {
   self.getStyles = () => {
     return $http.get('/beer/styles')
       .then((response) => {
-        console.log(response.data);
         self.data.styles = response.data.data;
-        console.log('Styles', self.data.styles);
         return self.data.styles;
       })
       .catch((error) => {
@@ -162,12 +146,10 @@ myApp.service('BeerService', function ($http, $location) {
   self.getCategories = () => {
     return $http.get('/beer/categories')
       .then((response) => {
-        console.log(response.data);
         self.data.categories = response.data.data;
         self.data.categories = self.data.categories.filter((category) => {
           return (category.name != '""');
         });
-        console.log('Categories', self.data.categories);
         return self.data.categories;
       })
       .catch((error) => {
@@ -178,7 +160,7 @@ myApp.service('BeerService', function ($http, $location) {
   self.submitReview = (review) => {
     return $http.post('/beer/rate', review)
       .then((response) => {
-        console.log('Beer rated!');
+        self.reset();
       })
       .catch((error) => {
         console.log('Failed to rate beer');
@@ -186,22 +168,17 @@ myApp.service('BeerService', function ($http, $location) {
   };
 
   self.getReviews = () => {
-    $http.get('/beer/reviews')
+    return $http.get('/beer/reviews')
       .then((response) => {
-        console.log('Got reviews');
         self.data.reviews = response.data;
         self.data.reviews.forEach((review) => {
-          console.log(review);
           let style = self.data.styles.filter((style) => {
 
             return style.id === review.style;
           });
-          console.log(style);
           review.styleName = style[0].name;
           review.categoryName = style[0].category.name;
-          console.log(review.categoryName);
         });
-        console.log(self.data.reviews);
       })
       .catch((error) => {
         console.log('Failed to get reviews', error);
@@ -212,7 +189,6 @@ myApp.service('BeerService', function ($http, $location) {
   self.getCategoryRatings = () => {
     self.data.crLabels = [];
     self.data.crData = [];
-    console.log('crData before', self.data.crData);
     return $http.get('beer/category-ratings')
       .then((response) => {
         response.data.forEach((rating) => {
@@ -244,7 +220,6 @@ myApp.service('BeerService', function ($http, $location) {
         let bandTotalRatings;
         let bandRatingsSum;
         for (let i = 0; i <= ibuMax; i += 10) {
-          console.log('Range beginning with ', i);
           bandTotalRatings = 0;
           bandRatingsSum = 0;
           for (let j = 0; j < ratings.length; j += 1) {
@@ -282,11 +257,9 @@ myApp.service('BeerService', function ($http, $location) {
         id: reviewId
       }
     };
-    console.log('Deleting review', config.params.id);
     return $http.delete('/beer/reviews/', config)
       .then((response) => {
-        console.log('Got response from server for delete');
-        self.getReviews();
+        return self.getReviews();
       })
       .catch((error) => {
         console.log('Failed to delete');

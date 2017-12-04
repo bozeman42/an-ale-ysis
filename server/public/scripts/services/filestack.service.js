@@ -1,9 +1,6 @@
 myApp.service('FilestackService', function () {
 
-
   let self = this;
-
-  console.log('FilestackService has been created');
 
   self.fsClient = filestack.init('A3FwoHPYqSIGg7A3LeJowz');
 
@@ -15,7 +12,6 @@ myApp.service('FilestackService', function () {
       minFiles: 1
     }).then(function (response) {
       // declare this function to handle response
-      console.log('The url!', response.filesUploaded[0].url);
       return response.filesUploaded[0].url;
     });
   };

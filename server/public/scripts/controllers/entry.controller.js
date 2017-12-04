@@ -1,5 +1,4 @@
 myApp.controller('EntryController',function($scope, BeerService, FilestackService){
-  console.log('EntryController created');
   let vm = this;
   let bs = BeerService;
   let fs = FilestackService;
@@ -7,7 +6,6 @@ myApp.controller('EntryController',function($scope, BeerService, FilestackServic
   vm.data = bs.data;
 
   vm.submitBeer = (beer) => {
-    console.log(beer);
     bs.selectBeer(beer);
   };
 
@@ -22,7 +20,6 @@ myApp.controller('EntryController',function($scope, BeerService, FilestackServic
       $scope.$apply(() => {
         vm.data.enteredBeer.imgurl = imgurl;
       });
-      console.log('the thing in ng-src',vm.data.enteredBeer.imgurl);
     });
   };
 

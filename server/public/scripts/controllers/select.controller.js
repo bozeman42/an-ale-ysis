@@ -1,5 +1,4 @@
 myApp.controller('SelectController', function(BeerService){
-  console.log('SelectController created');
   let vm = this;
   let bs = BeerService;
   vm.data = bs.data;
@@ -11,7 +10,6 @@ myApp.controller('SelectController', function(BeerService){
   vm.selectBeer = (beer) => {
     beer.api_id = beer.id;
     beer.brewery = beer.breweries[0].name;
-    console.log(beer);
     bs.selectBeer(beer);
   };
 
