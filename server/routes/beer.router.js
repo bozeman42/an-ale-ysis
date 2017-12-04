@@ -9,7 +9,6 @@ let pool = require('../modules/pool');
 let insertBeerAndGetId = require('../modules/insert.beer');
 
 router.get('/search', function (req, res) {
-  console.log('search', req.query);
   req.query.key = API_KEY;
   request({ method: 'GET', uri: 'https://api.brewerydb.com/v2/search', qs: req.query }, function (error, response, body) {
     if (error) {
@@ -26,7 +25,6 @@ router.get('/search', function (req, res) {
 });
 
 router.get('/bybrewery', function (req, res) {
-  console.log('Get bybrewery', req.query);
   config = {
     key: API_KEY,
     withBreweries: 'Y'
@@ -66,14 +64,11 @@ router.get('/categories', (req, res) => {
 // POST rate the beer
 router.post('/rate', (req, res) => {
   if (req.isAuthenticated()) {
-    console.log('This review:', req.body);
-    console.log('This user', req.user);
     let review = req.body;
     let beer = req.body.beer;
     insertBeerAndGetId(beer)
       .then((reviewBeerId) => {
         review.beer_id = reviewBeerId;
-        console.log('Review has beer_id of', review.beer_id);
         let user_id = req.user.id;
         let beer_id = review.beer_id;
         let rating = review.rating;
@@ -116,7 +111,6 @@ router.post('/rate', (req, res) => {
 router.get('/reviews', (req, res) => {
   if (req.isAuthenticated()) {
     let userId = req.user.id;
-    console.log('REVIEWS FOR USER', userId);
     pool.connect((connectError, db, done) => {
       if (connectError) {
         console.log('Error connecting', connectError);
@@ -184,7 +178,6 @@ router.delete('/reviews/', (req, res) => {
   if (req.isAuthenticated()) {
     let reviewId = req.query.id;
     let userId = req.user.id;
-    console.log("review to delete", reviewId);
     pool.connect((connectError, db, done) => {
       if (connectError) {
         console.log('Error connecting', connectError);
@@ -230,7 +223,6 @@ router.get('/category-ratings', (req, res) => {
             console.log('Error making query', queryError);
             res.sendStatus(500);
           } else {
-            console.log()
             res.send(result.rows);
           }
         });

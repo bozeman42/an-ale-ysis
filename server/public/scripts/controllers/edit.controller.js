@@ -1,5 +1,4 @@
 myApp.controller('EditReviewController',function($mdDialog,review){
-  console.log('EditReviewController created');
 
   let vm = this;
   vm.review = review;
@@ -29,24 +28,18 @@ myApp.controller('EditReviewController',function($mdDialog,review){
 
   vm.ratingLeave = () => {
     let stars = document.getElementsByClassName('dialog-rating-icon');
-    console.log(stars);
-    console.log('left!');
-    console.log('vm.edits.rating',vm.edits.rating);
     if (vm.edits.rating) {
       vm.ratingMessage = vm.messages[vm.edits.rating - 1];
     } else {
       vm.ratingMessage = 'Select a rating!';
     }
     for (let i = 0; i < stars.length; i += 1) {
-      console.log('Star',i);
       stars[i].classList.remove('gold');
       stars[i].classList.remove('no-star');
       if (i < vm.edits.rating) {
         stars[i].classList.add('gold');
-        console.log('is gold');
       } else {
         stars[i].classList.add('no-star');
-        console.log('is not gold');
       }
     }
   }
@@ -59,7 +52,6 @@ myApp.controller('EditReviewController',function($mdDialog,review){
       stars[i].classList.remove('no-star');
       if (i < event.target.id) {
         stars[i].classList.add('gold');
-        console.log(stars[i],'should be gold');
       } else {
         stars[i].classList.add('no-star');
       }

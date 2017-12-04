@@ -39,5 +39,4 @@ app.use('/', indexRouter);
 // Listen //
 app.listen(port, function () {
   console.log('Listening on port:', port);
-  console.log('DB name', process.env.DATABASE_NAME)
 });

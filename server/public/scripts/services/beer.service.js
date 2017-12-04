@@ -1,7 +1,6 @@
 myApp.service('BeerService', function ($http, $location) {
   let self = this;
 
-  console.log('BeerService created');
   let enteredBeerTemplate = {
     name: '',
     brewery: '',
@@ -171,7 +170,6 @@ myApp.service('BeerService', function ($http, $location) {
   self.getReviews = () => {
     return $http.get('/beer/reviews')
       .then((response) => {
-        console.log('Got reviews');
         self.data.reviews = response.data;
         self.data.reviews.forEach((review) => {
           let style = self.data.styles.filter((style) => {
@@ -261,7 +259,6 @@ myApp.service('BeerService', function ($http, $location) {
     };
     return $http.delete('/beer/reviews/', config)
       .then((response) => {
-        console.log('Got response from server for delete');
         return self.getReviews();
       })
       .catch((error) => {

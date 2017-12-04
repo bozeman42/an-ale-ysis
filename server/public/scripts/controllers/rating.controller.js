@@ -1,5 +1,4 @@
 myApp.controller('RatingController', function ($location, $mdToast, BeerService) {
-  console.log('RatingController created');
   let vm = this;
   let bs = BeerService;
 

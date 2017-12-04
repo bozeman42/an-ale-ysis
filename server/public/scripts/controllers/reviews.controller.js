@@ -1,5 +1,4 @@
 myApp.controller('ReviewsController', function ($mdDialog, $mdToast, UserService, BeerService) {
-  console.log('ReviewsController created');
   var vm = this;
   us = UserService;
   bs = BeerService;
@@ -23,10 +22,9 @@ myApp.controller('ReviewsController', function ($mdDialog, $mdToast, UserService
       parent: angular.element(document.body),
       clickOutsideToClose: true,
       targetEvent: review,
-      onShowing: () => {console.log(this)}
     }).then((edits) => {
       bs.submitEdits(edits).then(() => {
-        s$mdToast.show(
+        $mdToast.show(
           $mdToast.simple()
             .textContent('Your edits have been accepted.')
             .position('bottom left' )
@@ -50,11 +48,9 @@ myApp.controller('ReviewsController', function ($mdDialog, $mdToast, UserService
       bs.deleteReview(reviewId)
     })
     .then(() => {
-      console.log('this totally happened');
       $mdToast.show(
         $mdToast.simple()
           .textContent('Review deleted')
-          .position('bottom left')
           .hideDelay(2500)
       );
     });
