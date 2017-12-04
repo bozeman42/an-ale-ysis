@@ -4,7 +4,6 @@
 let pool = require('../modules/pool');
 
 let getBeerId = (api_id) => {
-  console.log('inserting beer');
   let beerId = new Promise((resolve, reject) => {
     pool.connect((connectError, db, done) => {
       if (connectError) {
@@ -20,7 +19,6 @@ let getBeerId = (api_id) => {
             reject('Query error getting ID');
           } else {
             // got beer ID
-            console.log('Get Beer Id:', result.rows[0].id);
             id = result.rows[0].id;
             resolve(id);
           }

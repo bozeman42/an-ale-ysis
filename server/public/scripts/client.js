@@ -3,7 +3,6 @@ var myApp = angular.module('myApp', ['ngRoute','ngMaterial', 'ngMessages','ngAni
 /// Routes ///
 myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
   $locationProvider.hashPrefix('');
-  console.log('myApp -- config')
   $routeProvider
     .when('/home', {
       templateUrl: '/views/templates/home.html',
@@ -52,6 +51,15 @@ myApp.config(function($routeProvider, $locationProvider,$mdThemingProvider) {
     .when('/entry', {
       templateUrl: '/views/templates/entry.html',
       controller: 'EntryController as ec',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/about', {
+      templateUrl: '/views/templates/about.html',
+      controller: 'AboutController as ac',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

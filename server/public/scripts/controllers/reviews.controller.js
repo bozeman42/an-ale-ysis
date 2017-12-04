@@ -1,4 +1,4 @@
-myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerService) {
+myApp.controller('ReviewsController', function ($mdDialog, $mdToast, UserService, BeerService) {
   console.log('ReviewsController created');
   var vm = this;
   us = UserService;
@@ -26,7 +26,12 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
       onShowing: () => {console.log(this)}
     }).then((edits) => {
       bs.submitEdits(edits).then(() => {
-        swal('Success', 'Edits accepted.', 'success');
+        s$mdToast.show(
+          $mdToast.simple()
+            .textContent('Your edits have been accepted.')
+            .position('bottom left' )
+            .hideDelay(2500)
+        );
       });
     }).catch(() => {
       console.log('Editing cancelled');
@@ -42,10 +47,19 @@ myApp.controller('ReviewsController', function ($mdDialog, UserService, BeerServ
     .cancel('Cancel');
     $mdDialog.show(confirm)
     .then(() => {
-      console.log('Decided to delete',reviewId);
       bs.deleteReview(reviewId)
+    })
+    .then(() => {
+      console.log('this totally happened');
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Review deleted')
+          .position('bottom left')
+          .hideDelay(2500)
+      );
     });
   };
+
   if (bs.data.categories[0]){
     vm.getReviews();
   } else {

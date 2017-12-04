@@ -12,8 +12,6 @@ myApp.controller('EditReviewController',function($mdDialog,review){
   vm.messages = ['I hate it!','I don\'t like it.','It\'s okay.','I like it.','I love it!'];
   vm.ratingMessage = 'Select a rating!';
 
-  console.log('EditReviewController review:',vm.review);
-
   vm.submitEdits = (edits) => {
     $mdDialog.hide(edits);
   };

@@ -1,4 +1,4 @@
-myApp.controller('RatingController', function ($location, BeerService) {
+myApp.controller('RatingController', function ($location, $mdToast, BeerService) {
   console.log('RatingController created');
   let vm = this;
   let bs = BeerService;
@@ -10,12 +10,15 @@ myApp.controller('RatingController', function ($location, BeerService) {
   vm.ratingMessage = 'Select a rating!';
 
   vm.submitReview = (review) => {
-    console.log(review);
     if (review.rating) {
       bs.submitReview(review)
         .then(() => {
-          swal('Review Submitted', '', 'success');
-          bs.reset();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Your rating has been added.')
+              .position('bottom left')
+              .hideDelay(2500)
+          );
           $location.path('/profile');
         });
     } else {
@@ -31,7 +34,6 @@ myApp.controller('RatingController', function ($location, BeerService) {
 
   vm.ratingLeave = () => {
     let stars = document.getElementsByClassName('rating-icon');
-    console.log('left!');
     if (vm.review.rating) {
       vm.ratingMessage = vm.messages[vm.review.rating - 1];
     } else {
@@ -62,7 +64,4 @@ myApp.controller('RatingController', function ($location, BeerService) {
     }
   };
 
-  async () =>
-
-  console.log('Beer to rate:', vm.beer);
 });
