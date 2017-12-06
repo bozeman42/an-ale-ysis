@@ -41,7 +41,16 @@ myApp.service('BeerService', function ($http, $location) {
   };
 
   self.reset = () => {
-    self.data.enteredBeer = enteredBeerTemplate;
+    self.data.enteredBeer = {
+      name: '',
+      brewery: '',
+      ibu: '',
+      abv: '',
+      style: null,
+      category: null,
+      imgurl: 'img/anALE-alysisblack-01.svg',
+      description: ''
+    };
     self.data.searchFilter = '';
     self.data.beers = [];
     self.data.breweries = [];
@@ -125,7 +134,6 @@ myApp.service('BeerService', function ($http, $location) {
   self.selectBeer = (beer) => {
     $location.path('/rate');
     self.data.review.beer = beer;
-
   };
 
   self.goToManualEntry = () => {
