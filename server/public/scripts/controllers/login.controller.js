@@ -41,6 +41,7 @@ myApp.controller('LoginController', function ($http, $location, UserService) {
     if (vm.user.username === '' || vm.user.password === '') {
       vm.message = "Choose a username and password!";
     } else {
+      console.log('submitted user',vm.user);
       $http.post('/register', vm.user).then(function (response) {
         $location.path('/home');
       }).catch(function (response) {
