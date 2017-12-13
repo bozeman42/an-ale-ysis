@@ -31,10 +31,14 @@ Link to software that is required to install the app (e.g. node).
 ### Installing
 
 Steps to get the development environment running.
-1. run `npm install`
-2. copy the .env.example file and rename to '.env'
-3. add your breweryDB API key to the .env file.
-4. Create the SQL tables in your database
+1. Download this repository
+2. run `npm install` in the repository directory
+3. copy the .env.example file and rename to '.env'
+4. add your breweryDB API key to the .env file.
+5. Create the SQL tables in your database
+6. run `npm start` to start the web server
+7. in your browser (chrome suggested) navigate to localhost:5000
+
 ```sql
 CREATE TABLE "users" (
 	"id" SERIAL PRIMARY KEY,
