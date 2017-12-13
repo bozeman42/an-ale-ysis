@@ -1,10 +1,19 @@
-# Name of Project
+# An-Ale-lysis
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+This application allows you search for and review beers you have tried and builds a taste profile to show you an overview of beers you enjoy based upon beer style or by IBU.
 
 ## Built With
 
-List technologies and frameworks here
+- AngularJS
+- AngularJS Material
+- Node.js
+- Express
+- PostgreSQL
+- BreweryDB's REST API
+- Filestack for image upload
+- Chart.js
+- Font Awesome for the beer mugs in the rating system
+- Passport local authentication
 
 ## Getting Started
 
@@ -24,7 +33,7 @@ Link to software that is required to install the app (e.g. node).
 Steps to get the development environment running.
 1. run `npm install`
 2. copy the .env.example file and rename to '.env'
-3. add your API key to the .env file.
+3. add your breweryDB API key to the .env file.
 4. Create the SQL tables in your database
 ```sql
 CREATE TABLE "users" (
@@ -56,26 +65,19 @@ CREATE TABLE "reviews" (
 
 ```
 
-## Screen Shot
-
-Include one or two screen shots of your project here (optional). Remove if unused.
-
-## Documentation
-
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
-
 ### Completed Features
 
 High level list of items completed.
 
-- [x] Feature a
-- [x] Feature b
+- [x] Search for beers and breweries using BreweryDB's REST API
+- [x] Review Beers
+- [x] Aggregate data and create charts displaying average ratings based upon beer style and IBU
 
 ### Next Steps
 
 Features that you would like to add at some point in the future.
 
-- [ ] Feature c
+- [ ] Suggest beers you may enjoy or beers in styles you haven't reviewed
 
 ## Deployment
 
@@ -83,9 +85,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* Name of author(s)
+* Aaron Kvarnlov-Leverty
 
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+* The base of Passport infrastructure provided by Prime Digital Academy
