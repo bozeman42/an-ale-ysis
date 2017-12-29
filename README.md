@@ -83,15 +83,6 @@ Features that you would like to add at some point in the future.
 
 - [ ] Suggest beers you may enjoy or beers in styles you haven't reviewed
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Authors
 
 * Aaron Kvarnlov-Leverty
-
-
-## Acknowledgments
-
-* The base of Passport infrastructure provided by Prime Digital Academy
