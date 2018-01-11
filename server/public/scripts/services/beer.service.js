@@ -92,7 +92,7 @@ myApp.service('BeerService', function ($http, $location) {
   self.searchBeer = (keyword, searchType) => {
     let config = {
       params: {
-        q: keyword,
+        q: encodeURI(keyword),
         type: searchType,
         withBreweries: 'Y'
       }

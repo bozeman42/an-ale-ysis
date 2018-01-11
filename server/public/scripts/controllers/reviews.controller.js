@@ -3,7 +3,7 @@ myApp.controller('ReviewsController', function ($mdDialog, $mdToast, UserService
   us = UserService;
   bs = BeerService;
   vm.data = bs.data;
-
+  beers = bs.data.beers;
   vm.sortIcon = vm.data.reverseReviewSort?'ic_keyboard_arrow_down_black_24px':'ic_keyboard_arrow_up_black_24px';
 
   vm.reverseSort = () => {
