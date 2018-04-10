@@ -81,6 +81,7 @@ High level list of items completed.
 
 Features that you would like to add at some point in the future.
 
+- [ ] Give feedback to the user when no beers are found in a search
 - [ ] Suggest beers you may enjoy or beers in styles you haven't reviewed
 
 ## Authors
