@@ -76,6 +76,7 @@ myApp.controller('ProfileController', function ($location, UserService, BeerServ
     .then(vm.displayCategoryRatingGraph);
 
 
+
   bs.getIbuRatings()
     .then(() => {
       let ratingColors = vm.data.ibuRangeRatings.map((rating)=>{

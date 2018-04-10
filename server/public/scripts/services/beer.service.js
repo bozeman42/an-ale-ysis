@@ -83,7 +83,6 @@ myApp.service('BeerService', function ($http, $location) {
       } else if (beer.breweries[0].images) {
         beer.imgurl = beer.breweries[0].images.squareMedium;
       } else {
-        // beer.imgurl = "https://www.drinkpreneur.com/wp-content/uploads/2017/04/drinkpreneur_2016-01-26-1453821995-8643361-beermain.jpg";
         beer.imgurl = 'img/anALE-alysisblack-01.svg';
       }
     });
