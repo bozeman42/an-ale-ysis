@@ -100,14 +100,16 @@ myApp.service('BeerService', function ($http, $location) {
     $http.get('/beer/search', config)
       .then((response) => {
         if (response.data.searchType === 'beer') {
-          self.data.beers = response.data.body.data;
-          self.applyLabels();
+          if (response.data.body.data) {
+            self.data.beers = response.data.body.data;
+            self.applyLabels();
+          }
         } else if (response.data.searchType === 'brewery') {
           self.data.breweries = response.data.body.data;
         }
       })
       .catch((error) => {
-        alert('ERROR IN /beer/search/ route', error);
+        console.error('ERROR IN /beer/search/ route', error);
       });
 
     self.data.keyword = '';
